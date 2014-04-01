@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__)) + '/'
 
 
 # Quick-start development settings - unsuitable for production
@@ -68,13 +69,19 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+STATIC_URL = '/static/'
+STATIC_ROOT = PROJECT_ROOT + 'static/'
+
+MEDIA_ROOT = PROJECT_ROOT + 'media/'
+MEDIA_URL = '/media/'
 
 
 # Static files (CSS, JavaScript, Images)
