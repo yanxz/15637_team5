@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>BlogIt -- login</title>
+	<link rel="stylesheet" href="">
+</head>
+
+<body>
+
+<div class="container">
+	<div class="page-header">
+		<h1 class="text-center">BlogIt</h1>
+	</div>
+	<p class="text-info text-center">Log in to see your blog:</p>
+
+	<div align="middle">
+	<form method="post" action="{% url 'login' %}">
+		<div class="form-signin">
+	    	
+			<input name="username" maxlength="254" type="text" id="id_username" placeholder="Email" class="input-block-level" style="width:300px" font-size:><br>
+	 		<input name="password" type="password" id="id_password" placeholder="Password" class="input-block-level" style="width:300px">
+	    	<div class="controls">
+	      		<input class="btn btn-large btn-primary" type="submit" value="Login"  style="width:150px"/>
+				<a href="/blog/register" class="btn btn-large btn-primary" style="width:150px">Register</a>
+				{% csrf_token %}
+	    	</div>
+	  	</div>
+	    </div>
+	</form>
+	</div>
+</div>
+
+<div align="middle">
+{% if form.non_field_errors %}
+{% for errorw in form.non_field_errors %}
+<p sytle="color:red">{{ errorw }} </p>
+{% endfor %}
+{% endif %}
+</div>

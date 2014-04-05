@@ -11,9 +11,9 @@ class Location(models.Model):
 
 class Scene(models.Model):
     title = models.CharField(max_length=240)
-    description = models.TextField()
-    occur_time = models.DateTimeField()
-    image_loc = models.CharField(max_length=240)
+    description = models.TextField(blank=True)
+    occur_time = models.DateTimeField(auto_now_add=True)
+    image_loc = models.CharField(max_length=240,blank=True)
     happy = 'h'
     date = 'd'
     party = 'p'
@@ -22,19 +22,19 @@ class Scene(models.Model):
         (date, 'date'),
         (party, 'party'),
             )
-    location = models.ForeignKey(Location)
+    location = models.ForeignKey(Location,null=True, blank=True, default = None)
 
     def __unicode__(self):
         return self.title
 
     
 class PersonScene(models.Model):
-    essay = models.TextField()
-    video_loc = models.CharField(max_length=240)
-    music_loc = models.CharField(max_length=240)
-    photo_loc = models.CharField(max_length=240)
-    scene = models.ForeignKey(Scene)
-    user = models.ForeignKey(User)
+    essay = models.TextField(blank=True)
+    video_loc = models.CharField(max_length=240,blank=True)
+    music_loc = models.CharField(max_length=240,blank=True)
+    photo_loc = models.CharField(max_length=240,blank=True)
+    scene = models.ForeignKey(Scene,null=True, blank=True, default = None)
+    user = models.ForeignKey(User,null=True, blank=True, default = None)
 
     def __unicode__(self):
         return self.user.username+" in "+self.scene.title
@@ -44,9 +44,9 @@ class PersonScene(models.Model):
         return PersonScene.objects.filter(scene=this_scene)
 
 class Comment(models.Model):
-    content = models.TextField()
+    content = models.TextField(blank=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    person_scene = models.ForeignKey(PersonScene)
+    person_scene = models.ForeignKey(PersonScene,null=True, blank=True, default = None)
     def __unicode__(self):
         return self.content
 
