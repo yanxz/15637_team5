@@ -3,36 +3,46 @@ from django.contrib.auth.models import User
 
 # initial push version
 class Scene(models.Model):
-    scene_id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=240)
     description = models.TextField()
     occur_time = models.DateTimeField()
     image_loc = models.CharField(max_length=240)
+    happy = 'h'
+    date = 'd'
+    party = 'p'
+    tag = (
+        (happy, 'happy'),
+        (date, 'date'),
+        (party, 'party'),
+            )
     tag = models.ForeignKey(Tag)
     location = models.ForeignKey(Location)
 
     def __unicode__(self):
         return self.title
+
     
 class PersonScene(models.Model):
-    comment = models.ForeignKey(Comment)
+    essay = models.TextField()
     video_loc = models.CharField(max_length=240)
     music_loc = models.CharField(max_length=240)
     photo_loc = models.CharField(max_length=240)
     scene = models.ForeignKey(Scene)
     user = models.ForeighKey(User)
+
     def __unicode__(self):
         return self.user.username+" in "+self.scene.title
 
+    @staticmethod
+    def get_personScenes_from_scene(this_scene):
+        return PersonScene.objects.filter(scene=this_scene)
+
 class Comment(models.Model):
     content = models.TextField()
-    time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now_add=True)
     person_scene = models.ForeignKey(PersonScene)
     def __unicode__(self):
         return self.content
-
-class Tag(models.Model):
-    tag_name = models.CharField(max_length=50)
 
 class Location(models.Model):
     longitude = models.IntegerField()
@@ -48,12 +58,22 @@ class Privilege(models.Model):
 class Friends(models.Model):
     user = models.ForeignKey(User)
     friends = models.ManyToManyField(User)
+   
+    @staticmethod
+    def get_friends(user):
+        return Friends.objects.filter(user=user)
 
 class Message(models.Model):
     create_time = models.DateTimeField()
     content = models.TextField()
     from_user = models.ForeignKey(User)
     to_user = models.ForeignKey(User)
+    def __unicode__(self):
+        return self.content
+
+    @staticmethod
+    def get_messages(user):
+        return Message.objects.filter(to_user=user).order_by('-create_time')
 
 class Profile(models.Model):
     user = models.ForeignKey(User,unique=True)
