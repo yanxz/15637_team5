@@ -65,7 +65,7 @@ a.rm, a.com {
 }
 .header, .content, .menu_nav, .fbg, .footer, form, ol, ol li, ul, .content .mainbar, .content .sidebar {
 	margin:0;
-	padding:0;
+	padding-bottom:50px;
 }
 .main_resize {
 	margin:0 auto;
@@ -377,4 +377,31 @@ ol li .send {
 	width:100%;
 	font-size:0;
 	line-height:0;
+}
+
+#cover {
+	position: relative;
+	z-index: 1000;
+	min-height: 202px;
+}
+
+#cover .avatar {
+	position: absolute;
+	left: 21px;
+	bottom: -47px;
+}
+
+#cover .avatar .figure_con {
+	width: 177px;
+	height: 177px;
+	padding: 5px;
+	background: #fff;
+
+}
+
+#cover_image {
+	width:923px;
+	height:310px;
+	overflow:hidden;
+	display:block;
 }
