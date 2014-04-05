@@ -59,8 +59,14 @@ WSGI_APPLICATION = 'scene.wsgi.application'
 
 DATABASES = {
     'default': {
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'remiScene',
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': PROJECT_ROOT + 'db/scene.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT':'',
     }
 }
 
