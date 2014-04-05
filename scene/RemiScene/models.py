@@ -1,7 +1,14 @@
 from django.db import models
+from django.db.models.signals import *
 from django.contrib.auth.models import User
 
 # initial push version
+class Location(models.Model):
+    longitude = models.IntegerField()
+    latitude = models.IntegerField()
+    city = models.CharField(max_length=50)
+    address = models.CharField(max_length=240)
+
 class Scene(models.Model):
     title = models.CharField(max_length=240)
     description = models.TextField()
@@ -15,7 +22,6 @@ class Scene(models.Model):
         (date, 'date'),
         (party, 'party'),
             )
-    tag = models.ForeignKey(Tag)
     location = models.ForeignKey(Location)
 
     def __unicode__(self):
@@ -28,7 +34,7 @@ class PersonScene(models.Model):
     music_loc = models.CharField(max_length=240)
     photo_loc = models.CharField(max_length=240)
     scene = models.ForeignKey(Scene)
-    user = models.ForeighKey(User)
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.user.username+" in "+self.scene.title
@@ -44,20 +50,14 @@ class Comment(models.Model):
     def __unicode__(self):
         return self.content
 
-class Location(models.Model):
-    longitude = models.IntegerField()
-    latitude = models.IntegerField()
-    city = models.CharField(max_length=50)
-    address = models.CharField(max_length=240)
-
 class Privilege(models.Model):
     user = models.ForeignKey(User)
     scene = models.ForeignKey(Scene)
     level = models.IntegerField()
 
 class Friends(models.Model):
-    user = models.ForeignKey(User)
-    friends = models.ManyToManyField(User)
+    user = models.ForeignKey(User, related_name='user')
+    friends = models.ManyToManyField(User, related_name='friends')
    
     @staticmethod
     def get_friends(user):
@@ -66,15 +66,15 @@ class Friends(models.Model):
 class Message(models.Model):
     create_time = models.DateTimeField()
     content = models.TextField()
-    from_user = models.ForeignKey(User)
-    to_user = models.ForeignKey(User)
+    from_user = models.ForeignKey(User, related_name='fromWho')
+    to_user = models.ForeignKey(User, related_name='toWho')
     def __unicode__(self):
         return self.content
 
     @staticmethod
     def get_messages(user):
         return Message.objects.filter(to_user=user).order_by('-create_time')
-
+'''
 class Profile(models.Model):
     user = models.ForeignKey(User,unique=True)
     id_photo_id = models.CharField(max_length=50)
@@ -89,4 +89,4 @@ def create_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
-
+'''
