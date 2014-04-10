@@ -1,0 +1,30 @@
+{% extends "home_base.html" %}
+
+{% block header %}
+{% load staticfiles %}
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".scene").hover(
+			function(){
+				$("p").text("rcyrcyrcy");
+			},function(){
+				$("p").text("");
+		});
+	});
+	function makevisible(cur,which){
+		if (which==0)
+			cur.filters.alpha.opacity=100
+		else
+			cur.filter.alpha.opacity=20
+	}
+	</script>
+	<link rel="stylesheet" type="text/css" href="{% static "scene.css" %}">
+	
+{% endblock %}
+
+{% block content %}
+	<div class="scene" id="rcy">
+		<img src="http://hdn.xnimg.cn/photos/hdn321/20131127/0535/h_large_Ekqj_5292000045e5113e.jpg">
+		<p></p>
+	</div>
+{% endblock %}
