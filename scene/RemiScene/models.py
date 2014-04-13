@@ -84,6 +84,7 @@ class Profile(models.Model):
     id_photo_id = models.CharField(max_length=50)
     bg_pic_id = models.CharField(max_length=50)
     music_id = models.CharField(max_length=50)
+    token = models.CharField(max_length = 50)
 
     def __unicode__(self):
         return self.user.username
