@@ -25,7 +25,7 @@ from django.core.urlresolvers import reverse
 from itertools import chain
 from operator import attrgetter
 
-#@login_required
+@login_required
 def home(request):
     return render(request,'RemiScene/home.html')
     '''

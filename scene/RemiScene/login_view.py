@@ -12,6 +12,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import *
 
 from form import RegistrationForm
+# Used to reverse url
+from django.core.urlresolvers import reverse
+# Used to send mail from within Django
+from django.core.mail import send_mail
+
+from RemiScene.models import *
+from RemiScene.forms import *
 
 def my_login(request):
 	context = {}
@@ -58,7 +65,7 @@ def register(request):
 	token = default_token_generator.make_token(new_user)
 	new_user.email = token
 	email_body = """
-Welcome to the Simple Blog. Pleas click the link below to
+Welcome to the Simple RemiScene. Pleas click the link below to
 verfiy your email address and complete the registration of
 your account:
 
@@ -71,4 +78,16 @@ http://%s%s
 			  recipient_list=[new_user.username])
 	new_user.save()
 	new_user.get_profile().save()
-	return render(request,'blog/need_confirm.html',{})
+	return render(request,'RemiScene/need_confirm.html',{})
+
+def confirm(request,email,token):
+	
+	try:
+		user = User.objects.get(username=email)
+	except:
+		return render(request,'RemiScene/confirm_failded.html',{})
+	if default_token_generator.check_token(user,token):
+		user.is_active = True
+		return render(request,'RemiScene/confirm_successed.html',{})
+	else:
+		return render(request,'RemiScene/confirm_failded.html',{})
