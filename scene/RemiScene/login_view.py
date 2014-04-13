@@ -35,10 +35,10 @@ def my_login(request):
 							password = password)
 		if user is not None:
 			if user.is_active:
-				login(request.user)
+				login(request,user)
 				return redirect(reverse('home'))
 			else:
-				return render(request,'RemiScene/failed_to_confirm.html',{})
+				return render(request,'RemiScene/confirm_failed.html',{})
 		else:
 			context['error'] = 'Incorrect username and password'
 			return render(request,'RemiScene/login.html',context);
@@ -63,7 +63,10 @@ def register(request):
 
 	new_user.is_active = False
 	token = default_token_generator.make_token(new_user)
-	new_user.email = token
+	new_user.save()
+	profile = new_user.get_profile()
+	profile.token = token
+	profile.save()
 	email_body = """
 Welcome to the Simple RemiScene. Pleas click the link below to
 verfiy your email address and complete the registration of
@@ -76,8 +79,7 @@ http://%s%s
 			  message=email_body,
 			  from_email='chongyur@andrew.cmu.edu',
 			  recipient_list=[new_user.username])
-	new_user.save()
-	new_user.get_profile().save()
+	
 	return render(request,'RemiScene/need_confirm.html',{})
 
 def confirm(request,email,token):
@@ -86,8 +88,9 @@ def confirm(request,email,token):
 		user = User.objects.get(username=email)
 	except:
 		return render(request,'RemiScene/confirm_failded.html',{})
-	if default_token_generator.check_token(user,token):
+	if token == user.get_profile().token:
 		user.is_active = True
+		user.save()
 		return render(request,'RemiScene/confirm_successed.html',{})
 	else:
 		return render(request,'RemiScene/confirm_failded.html',{})
