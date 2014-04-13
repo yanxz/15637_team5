@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^login$','RemiScene.login_view.my_login',name='login'),
     url(r'^register$','RemiScene.login_view.register',name='register'),
     url(r'^confirm/(?P<email>[^/]*)/(?P<token>[^/]*)', 'RemiScene.login_view.confirm', name='confirm'),
+    url(r'^ts$','RemiScene.login_view.test'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
