@@ -94,3 +94,7 @@ def confirm(request,email,token):
 		return render(request,'RemiScene/confirm_successed.html',{})
 	else:
 		return render(request,'RemiScene/confirm_failded.html',{})
+
+
+def test(request):
+	return render(request,'RemiScene/scene.html',{})

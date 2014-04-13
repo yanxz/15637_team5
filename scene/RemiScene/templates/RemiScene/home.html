@@ -4,7 +4,7 @@
 {% load staticfiles %}
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$(".scene").hover(
+		$(".scene_cover").hover(
 			function(){
 				$("p").text("rcyrcyrcy");
 			},function(){
@@ -23,8 +23,10 @@
 {% endblock %}
 
 {% block content %}
-	<div class="scene" id="rcy">
-		<img src="http://hdn.xnimg.cn/photos/hdn321/20131127/0535/h_large_Ekqj_5292000045e5113e.jpg">
+	<div class="scene_cover" id="rcy">
+		<a href="testSceneHome.html">
+		<img src="../../static/images/3.jpg">
+		</a>
 		<p></p>
 	</div>
 {% endblock %}
