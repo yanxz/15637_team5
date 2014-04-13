@@ -15,6 +15,9 @@ from mimetypes import guess_type
 
 from django.http import HttpResponse, Http404
 
+from RemiScene.forms import *
+from RemiScene.models import *
+
 # Used to send mail from within Django
 from django.core.mail import send_mail
 
@@ -50,4 +53,7 @@ def home(request):
 def register(request)
 '''
 
+def manage_scene_create(request):
+    context = {'form':SceneForm()}
+    return render(request, 'RemiScene/create_scene.html', context)
 
