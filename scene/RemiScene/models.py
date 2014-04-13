@@ -12,7 +12,8 @@ class Location(models.Model):
 class Scene(models.Model):
     title = models.CharField(max_length=240)
     description = models.TextField(blank=True)
-    occur_time = models.DateTimeField(auto_now_add=True)
+    occur_time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now_add=True)
     image_loc = models.CharField(max_length=240,blank=True)
     happy = 'h'
     date = 'd'

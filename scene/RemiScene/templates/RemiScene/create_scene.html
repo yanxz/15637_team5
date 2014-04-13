@@ -1,0 +1,12 @@
+{% extends "home_base.html" %}
+
+<form enctype="multipart/form-data" method="post" action="{% url 'add_blog' %}" class="control-group">
+	<h4 class="control-label" style="margin-top: 100px">Create New Blog</h4>
+	<div class="controls" style="padding: 1em">
+		{{ form.content }}
+	</div>
+	<div>
+		{{ form.picture }}
+	</div>
+	<input type="submit" value="post blog" class="btn btn-lg btn-primary" style="margin-bottom : 40px"/>
+{% csrf_token %}

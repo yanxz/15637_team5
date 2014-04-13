@@ -46,3 +46,8 @@ class RegistrationForm(forms.Form):
 		# We must return the cleaned data we got from the cleaned_data
 		# dictionary
 		return email
+
+class SceneForm(forms.ModelForm):
+	class Meta:
+		model = Scene
+		exclude = ('create_time', 'image_loc')
