@@ -89,8 +89,15 @@ STATIC_ROOT = PROJECT_ROOT + 'static/'
 MEDIA_ROOT = PROJECT_ROOT + 'media/'
 MEDIA_URL = '/media/'
 
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+
+AUTH_PROFILE_MODULE = 'RemiScene.Profile'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
+
