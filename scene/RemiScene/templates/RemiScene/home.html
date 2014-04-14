@@ -2,6 +2,7 @@
 
 {% block header %}
 {% load staticfiles %}
+<!--
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$(".scene_cover").hover(
@@ -19,7 +20,7 @@
 	}
 	</script>
 	<link rel="stylesheet" type="text/css" href="{% static "scene.css" %}">
-	
+	-->
 {% endblock %}
 
 {% block content %}
@@ -29,4 +30,9 @@
 		</a>
 		<p></p>
 	</div>
+	{% for scene in scenes %}
+		<div>
+			<a class="btn scene_cover" href = "{% url 'scene_home' scene.id %}" role="button">{{ scene.title }}</a>
+		</div>
+	{% endfor %}
 {% endblock %}

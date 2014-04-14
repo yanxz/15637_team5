@@ -35,8 +35,6 @@ import re
 
 @login_required
 def home(request):
-    return render(request,'RemiScene/home.html')
-    '''
     user = request.user
     friends = Friends.get_friends(user)
     profile = user.get_profile()
@@ -45,23 +43,21 @@ def home(request):
     person_scenes = PersonScene.get_personScenes_from_user(user)
     for s in person_scenes:
         scene_set.append(s.scene)
+    print scene_set
     context = {'user':user,
             'profile':profile,
             'scenes':scene_set,
             'friends':friends,
             'messages':messages}
             
-    return render(request, 'blog/home.html',context)
-    '''
-'''
-@transaction.atomic
-def register(request)
-'''
+    return render(request, 'RemiScene/home.html',context)
 
+@login_required
 def manage_scene_create(request):
     context = {'form':SceneForm()}
     return render(request, 'RemiScene/create_scene.html', context)
 
+@login_required
 def add_scene(request):
     new_Scene = Scene(create_time = datetime.now())
     form = SceneForm(request.POST, request.FILES, instance=new_Scene)
@@ -70,12 +66,12 @@ def add_scene(request):
         return redirect('create_scene')
 
     form.save()
-
+    print("passed form validation!")
     friends = request.POST['friends']
     friends_list = re.compile(r',').split(friends)
 
     for friend_name in friends_list:
-        friend_name = friends_name.strip();
+        friend_name = friend_name.strip();
         user = User.objects.filter(username=friend_name)
         if len(user) <= 0:
             continue
@@ -83,6 +79,24 @@ def add_scene(request):
         new_person_scene = PersonScene(user=user[0], scene=new_Scene)
         new_person_scene.save()
 
-    return render(request, 'RemiScene/home.html', context)
+    new_person_scene = PersonScene(user=request.user, scene=new_Scene)
+    new_person_scene.save()
+    return redirect(reverse('home'))
 
-def search
+@login_required
+def search_people(request):
+    context = {}
+    if request.method == 'GET':
+        return render(request, "RemiScene/search_people.html", context)
+
+    name = request.POST["name"]
+
+    users = User.objects.filter(username__contains=name)
+    context = {'result_users': users}
+    return render(request, "RemiScene/search_people.html", context)
+
+@login_required
+def add_friend(request, userid):
+    friend = User.objects.filter(id=userid)
+    friendship = Friend(user=request.user, friends=friend)
+    friendship.save()

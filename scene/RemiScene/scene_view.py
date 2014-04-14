@@ -38,7 +38,7 @@ def home(request, scene_id):
 	context = {}
 	context['person_scenes'] = person_scenes
 	context['scene'] = scene
-	return render(request, "RemiScene/testSceneHome.html", context)
+	return render(request, "RemiScene/scene.html", context)
 
 #@login_required
 def click_on_person(request, person_scene_id):

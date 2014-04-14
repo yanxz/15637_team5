@@ -1,4 +1,14 @@
 {% extends "home_base.html" %}
 
 {% block content %}
-{% %}
+	<form method="post" action="{% url 'search_people' %}">
+		Type in the name of the person:<input type="text" name="name"><br>
+		<input type="submit" value="search">
+	{% csrf_token %}
+	</form>
+	{% for user in result_users %}
+	<div>
+		<a class="btn" href = "{% url 'add_friend' user.id %}" role="button">{{ user.firstname }} {{ user.lastname }}</a>
+	</div>
+	{% endfor %}
+{% endblock %}
