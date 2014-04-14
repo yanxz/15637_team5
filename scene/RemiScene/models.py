@@ -69,6 +69,12 @@ class Friends(models.Model):
     def get_friends(user):
         return Friends.objects.filter(user=user)
 
+    def __unicode__(self):
+        friend_names = ""
+        for friend in self.friends.all():
+            friend_names += friend.first_name + " " + friend.last_name + " "
+        return self.user.first_name + " " + self.user.last_name + " -> " + friend_names
+
 class Message(models.Model):
     create_time = models.DateTimeField()
     content = models.TextField()

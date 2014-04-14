@@ -89,7 +89,7 @@ def add_scene(request):
 def search_people(request):
     context = {}
     if request.method == 'GET':
-        return render(request, "RemiScene/search_people.html", context)
+        return render(request, "RemiScene/search_people.html", {'user': request.user})
 
     name = request.POST["name"]
 
@@ -97,21 +97,35 @@ def search_people(request):
     users_group2 = User.objects.filter(last_name__contains=name)
     result_list = list(chain(users_group1, users_group2))
     print(result_list)
-    context = {'result_users': result_list}
+    context = {'result_users': result_list, 'user': request.user}
     return render(request, "RemiScene/search_people.html", context)
 
 @login_required
 def add_friend(request, userid):
     friend = User.objects.get(id=userid)
-
+    print("friend's userid: " + str(userid))
     user = Friends.objects.filter(user = request.user)
+    print("user's userid: " + str(request.user.id))
     if len(user) == 0:
         friendship = Friends(user = request.user)
+        friendship.save()
+        friendship.friends.add(friend)
         friendship.save()
     elif friend not in user[0].friends.all():
         user[0].friends.add(friend)
         user[0].save()
 
-    message = 'You have successfully added '+ friend.first_name + " " + friend.last_name
-    context = {'message': message}
+    # save a message into the system.
+    content = "I have added you as a SceneFriend."
+    add_friend_message = Message(create_time=datetime.now(), content=content, from_user=request.user, to_user=friend)
+    add_friend_message.save()
+
+    add_friend_result = 'You have successfully added '+ friend.first_name + " " + friend.last_name
+    context = {'add_friend_result': add_friend_result}
     return render(request, "RemiScene/search_people.html", context)
+
+@login_required
+def message(request):
+    messages = Message.get_messages(request.user)
+    context = {'messages' : messages}
+    return render(request, "RemiScene/message.html", context)
