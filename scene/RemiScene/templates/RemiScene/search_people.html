@@ -8,7 +8,10 @@
 	</form>
 	{% for user in result_users %}
 	<div>
-		<a class="btn" href = "{% url 'add_friend' user.id %}" role="button">{{ user.firstname }} {{ user.lastname }}</a>
+		<a class="btn" href = "{% url 'add_friend' user.id %}" type="button">{{ user.first_name }} {{ user.last_name }}</a>
 	</div>
 	{% endfor %}
+	{% if message %}
+		{{ message }}
+	{% endif %}
 {% endblock %}

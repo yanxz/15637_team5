@@ -30,6 +30,7 @@ from operator import attrgetter
 
 from datetime import datetime, date, time
 from mimetypes import guess_type
+from itertools import chain
 
 import re
 
@@ -72,7 +73,8 @@ def add_scene(request):
 
     for friend_name in friends_list:
         friend_name = friend_name.strip();
-        user = User.objects.filter(username=friend_name)
+        names= re.compile(r' ').split(friend_name, 2)
+        user = User.objects.filter(first_name=names[0], last_name=names[1])
         if len(user) <= 0:
             continue
 
@@ -91,12 +93,25 @@ def search_people(request):
 
     name = request.POST["name"]
 
-    users = User.objects.filter(username__contains=name)
-    context = {'result_users': users}
+    users_group1 = User.objects.filter(first_name__contains=name)
+    users_group2 = User.objects.filter(last_name__contains=name)
+    result_list = list(chain(users_group1, users_group2))
+    print(result_list)
+    context = {'result_users': result_list}
     return render(request, "RemiScene/search_people.html", context)
 
 @login_required
 def add_friend(request, userid):
-    friend = User.objects.filter(id=userid)
-    friendship = Friend(user=request.user, friends=friend)
-    friendship.save()
+    friend = User.objects.get(id=userid)
+
+    user = Friends.objects.filter(user = request.user)
+    if len(user) == 0:
+        friendship = Friends(user = request.user)
+        friendship.save()
+    elif friend not in user[0].friends.all():
+        user[0].friends.add(friend)
+        user[0].save()
+
+    message = 'You have successfully added '+ friend.first_name + " " + friend.last_name
+    context = {'message': message}
+    return render(request, "RemiScene/search_people.html", context)
