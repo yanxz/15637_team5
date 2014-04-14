@@ -26,15 +26,14 @@
 {% block content %}
 	<a href="{% url 'create_scene' %}">Create scene</a>
 
-	<div class="scene_cover" id="rcy">
-		<a href="testSceneHome.html">
-		<img src="../../static/images/3.jpg">
-		</a>
-		<p></p>
-	</div>
+	
 	{% for scene in scenes %}
-		<div>
-			<a class="btn scene_cover" href = "{% url 'scene_home' scene.id %}" role="button">{{ scene.title }}</a>
-		</div>
+	<div class="scene_cover" id="rcy">
+		<a class="btn scene_cover" href = "{% url 'scene_home' scene.id %}" role="button">
+
+		</a>
+		<p>{ scene.title }}</p>
+	</div>
+
 	{% endfor %}
 {% endblock %}
