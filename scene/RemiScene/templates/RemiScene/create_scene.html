@@ -1,12 +1,70 @@
 {% extends "home_base.html" %}
 
-<form enctype="multipart/form-data" method="post" action="{% url 'add_blog' %}" class="control-group">
-	<h4 class="control-label" style="margin-top: 100px">Create New Blog</h4>
-	<div class="controls" style="padding: 1em">
-		{{ form.content }}
+
+{% block content %}
+<style type="text/css">
+  body {
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
+
+  .form-signin {
+    max-width: 800px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-control {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 0px;
+  }
+
+</style>
+
+<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="control-group">
+	<h2 style="text-align:center;">Create Scene</h2>
+	<div class="control-group">
+		<label>Title</label>
+		{{ form.title }}
 	</div>
-	<div>
-		{{ form.picture }}
+	<div class="control-group">
+		<label>Description</label>
+		{{ form.description }}
 	</div>
-	<input type="submit" value="post blog" class="btn btn-lg btn-primary" style="margin-bottom : 40px"/>
+	<div class="control-group">
+		<label>Time</label>
+		{{ form.occur_time }}
+	</div>
+	<div class="control-group">
+		<label>Tag</label>
+		{{ form.tag }}
+	</div>
+	<div class="control-group">
+		<label>Location</label>
+		{{ form.location }}
+	</div>
+	<div class="control-group">
+		<label>Image</label>
+		{{ form.image_loc }}
+	</div>
+	<div class="control-group">
+		<label>Friends in the site</label>
+		<input type="text" id="friends"/>
+	</div>
+
+	
+	<input type="submit" value="Create Scene" class="btn btn-lg btn-primary" style="margin-bottom : 40px"/>
 {% csrf_token %}
+
+{% endblock %}

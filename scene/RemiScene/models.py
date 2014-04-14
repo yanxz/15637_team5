@@ -14,15 +14,16 @@ class Scene(models.Model):
     description = models.TextField(blank=True)
     occur_time = models.DateTimeField()
     create_time = models.DateTimeField(auto_now_add=True)
-    image_loc = models.CharField(max_length=240,blank=True)
-    happy = 'h'
-    date = 'd'
-    party = 'p'
-    tag = (
-        (happy, 'happy'),
-        (date, 'date'),
-        (party, 'party'),
+    image_loc = models.ImageField(upload_to='image', blank=True)
+    LIFE = 'life'
+    WORK = 'work'
+    OTHER = 'other'
+    TAG = (
+        (LIFE, 'happy'),
+        (WORK, 'date'),
+        (OTHER, 'party'),
             )
+    tag = models.CharField(max_length=5, choices=TAG, default=OTHER)
     location = models.ForeignKey(Location,null=True, blank=True, default = None)
 
     def __unicode__(self):

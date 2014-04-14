@@ -50,4 +50,12 @@ class RegistrationForm(forms.Form):
 class SceneForm(forms.ModelForm):
 	class Meta:
 		model = Scene
-		exclude = ('create_time', 'image_loc')
+		exclude = ('create_time',)
+		widgets = {
+			'title': forms.TextInput(attrs={'class': 'input-block-level'}),
+			'description': forms.Textarea(attrs={'class': 'span6 text', 'cols': 60}),
+			'occur_time': forms.DateInput(attrs={'class': ''}),
+			'tag': forms.Select(attrs={'class': ''}),
+			'location': forms.TextInput(attrs={'class': ''}),
+			'image_loc': forms.FileInput(attrs={'class': 'btn'})
+		}

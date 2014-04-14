@@ -9,9 +9,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 
-from blog.models import *
-from blog.forms import *
-
 from django.core.mail import send_mail
 from django.http import HttpResponse, Http404
 
@@ -20,6 +17,9 @@ from mimetypes import guess_type
 
 import string
 import random
+
+def home(request):
+    return render(request, 'RemiScene/map.html')
 
 # register page.
 def plain_search(request):

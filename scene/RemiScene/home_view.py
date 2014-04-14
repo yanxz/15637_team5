@@ -28,6 +28,11 @@ from django.core.urlresolvers import reverse
 from itertools import chain
 from operator import attrgetter
 
+from datetime import datetime, date, time
+from mimetypes import guess_type
+
+import re
+
 @login_required
 def home(request):
     return render(request,'RemiScene/home.html')
@@ -57,3 +62,27 @@ def manage_scene_create(request):
     context = {'form':SceneForm()}
     return render(request, 'RemiScene/create_scene.html', context)
 
+def add_scene(request):
+    new_Scene = Scene(create_time = datetime.now())
+    form = SceneForm(request.POST, request.FILES, instance=new_Scene)
+
+    if not form.is_valid():
+        return redirect('create_scene')
+
+    form.save()
+
+    friends = request.POST['friends']
+    friends_list = re.compile(r',').split(friends)
+
+    for friend_name in friends_list:
+        friend_name = friends_name.strip();
+        user = User.objects.filter(username=friend_name)
+        if len(user) <= 0:
+            continue
+
+        new_person_scene = PersonScene(user=user[0], scene=new_Scene)
+        new_person_scene.save()
+
+    return render(request, 'RemiScene/home.html', context)
+
+def search
