@@ -83,9 +83,9 @@ class Message(models.Model):
 
 class Profile(models.Model):
     user = models.ForeignKey(User,unique=True)
-    id_photo_id = models.CharField(max_length=50)
-    bg_pic_id = models.CharField(max_length=50)
-    music_id = models.CharField(max_length=50)
+    id_photo = models.ImageField(upload_to='image',default='image/default.png')
+    bg_pic = models.ImageField(upload_to='image',blank=True)
+    music_id = models.FileField(upload_to='music',blank=True)
     token = models.CharField(max_length = 50)
 
     def __unicode__(self):

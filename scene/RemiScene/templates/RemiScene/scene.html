@@ -7,11 +7,22 @@
 
 {% block content %}
 	{% for person_scene in person_scenes %}
+	<div class="sidebar">
+		<img src="{% url 'get_photo' person_scene.user.username 1 0%}">
+	</div>
 	<div class="rightbar">
 		<a href="{% url 'edit_person_scene' person_scene.id %}">
 		<div class="triangle-border left">
-		    {{person_scene.essay}}
+			<div>
+		    	{{person_scene.essay}}
+		    </div>
+		    <div>
+		    	{% if person_scene.photo_loc %}
+		    		<img src="{% url 'get_photo' 1 person_scene.id 2 %}">
+		    	{% endif %}
+		    </div>
 		</div>
+		</a>
 	</div>
 	{% endfor %}
 {% endblock %}

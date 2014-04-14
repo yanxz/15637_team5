@@ -30,9 +30,12 @@
 	{% for scene in scenes %}
 	<div class="scene_cover" id="rcy">
 		<a class="btn scene_cover" href = "{% url 'scene_home' scene.id %}" role="button">
-
+			{% if scene.image_loc %}
+			<img src="{% url 'get_photo' user.username scene.id 1 %}">
+			{% endif %}
+			<p>{{ scene.title }}</p>
 		</a>
-		<p>{ scene.title }}</p>
+		
 	</div>
 
 	{% endfor %}

@@ -17,6 +17,9 @@ from django.core.urlresolvers import reverse
 # Used to send mail from within Django
 from django.core.mail import send_mail
 
+from django.http import HttpResponse, Http404
+from mimetypes import guess_type
+
 from RemiScene.models import *
 from RemiScene.forms import *
 
@@ -116,3 +119,41 @@ def edit_person_scene(request,id):
 	form.save()
 	person_scene.save()
 	return redirect(reverse('home'))
+
+#type: 0,profile  1,scene  2,personScene
+def get_photo(request,username,id,type):
+	try:
+		#
+		type = int(type)
+		if type == 0:
+			user = User.objects.get(username=username)
+			profile = user.get_profile()
+			'''
+			if not profile.id_photo:
+				content_type=guess_type('default.png')
+				return HttpResponse(,mimetype=content_type)
+				'''
+			content_type = guess_type(profile.id_photo.name)
+			return HttpResponse(profile.id_photo,mimetype=content_type)
+
+		elif type == 1:
+			scene = Scene.objects.get(id=id)
+			print(scene.image_loc)
+			if not scene.image_loc:
+				return HttpResponse("error1")
+				#content_type=guess_type('')
+				#return HttpResponse('image/',mimetype=content_type)
+			content_type = guess_type(scene.image_loc.name)
+			return HttpResponse(scene.image_loc,mimetype=content_type)
+
+		elif type == 2:
+			personScene = PersonScene.objects.get(id=id)
+			print(personScene.photo_loc)
+			if not personScene.photo_loc:
+				return HttpResponse("")
+			content_type = guess_type(personScene.photo_loc.name)
+			return HttpResponse(personScene.photo_loc,mimetype=content_type)
+
+
+	except:
+		return HttpResponse("error-1")
