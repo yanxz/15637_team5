@@ -22,6 +22,26 @@
     bottom: 155px;
     z-index:1000;
 }
+
+.scene_person {
+    width:923px;
+    height: 300px;
+    margin: auto;
+}
+
+.rightbar {
+    margin:0;
+    padding:0;
+    float:right;
+    width:638px;
+}
+.leftbar {
+    margin:0;
+    padding:0;
+    float:left;
+    width:638px;
+}
+
 .bubble_diailog {
     position: relative;
     background: #ffc;

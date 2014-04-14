@@ -99,19 +99,20 @@ def confirm(request,email,token):
 def test(request):
 	return render(request,'RemiScene/scene.html',{})
 
-def edit_person_scene(request):
-	#person_scene = get_object_or_404(PersonScene,user=request.user,id=id)
-	person_scene = PersonScene()
+def edit_person_scene(request,id):
+	person_scene = get_object_or_404(PersonScene,user=request.user,id=id)
+	#person_scene = PersonScene()
 	
 	if request.method == "GET":
 		form = PersonSceneForm(instance=person_scene)
-		context = {"form":form}
+		context = {"form":form,"id":id}
 		return render(request,"RemiScene/edit_person_scene.html",context)
 
 	form = PersonSceneForm(request.POST,request.FILES,instance=person_scene)
 
 	if not form.is_valid():
-		context = {"form":form}
+		context = {"form":form,"id":id}
 		return render(request,"RemiScene/edit_person_scene.html",context)
 	form.save()
+	person_scene.save()
 	return redirect(reverse('home'))

@@ -1,0 +1,62 @@
+{% extends "home_base.html" %} 
+
+{% block content %}
+
+<style type="text/css">
+  body {
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
+
+  .form-signin {
+    max-width: 800px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-control {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 0px;
+  }
+
+</style>
+
+<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'edit_person_scene' id %}" class="control-group">
+	<h2 style="text-align:center;">eidt person scene</h2>
+  <!--
+	<div class="control-group">
+		<label>Essay</label>
+		{{ form.essay }}
+	</div>
+	<div class="control-group">
+		<label>video</label>
+		{{ form.video_loc }}
+	</div>
+	<div class="control-group">
+		<label>music</label>
+		{{ form.music_loc }}
+	</div>
+	<div class="control-group">
+		<label>photo</label>
+		{{ form.photo_loc }}
+	</div>
+  -->
+  {{form}}
+	
+
+	
+	<input type="submit" value="Create Scene" class="btn btn-lg btn-primary" style="margin-bottom : 40px"/>
+{% csrf_token %}
+
+{% endblock %}

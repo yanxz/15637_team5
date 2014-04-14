@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^scene/add_scene$', 'RemiScene.home_view.add_scene', name='add_scene'),
     url(r'^search_people$', 'RemiScene.home_view.search_people', name='search_people'),
     url(r'^add_friend/(?P<userid>\d+)$', 'RemiScene.home_view.add_friend', name='add_friend'),
+    url(r'^edit_person_scene/(?P<id>\d+)$','RemiScene.login_view.edit_person_scene',name='edit_person_scene'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

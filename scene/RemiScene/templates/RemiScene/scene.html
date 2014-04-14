@@ -2,13 +2,16 @@
 {% block header %}
 {% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "scene.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "triangle.css" %}">
 {% endblock %}
 
 {% block content %}
-<div cladd="container">
-	<div class="bubble_diailog size_1">
-		<i class="t">rcy</i>
-		<b class="t">rcy</b>
+	{% for person_scene in person_scenes %}
+	<div class="rightbar">
+		<a href="{% url 'edit_person_scene' person_scene.id %}">
+		<div class="triangle-border left">
+		    {{person_scene.essay}}
+		</div>
 	</div>
-</div>
+	{% endfor %}
 {% endblock %}

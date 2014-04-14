@@ -63,6 +63,7 @@ class SceneForm(forms.ModelForm):
 class PersonSceneForm(forms.ModelForm):
 	class Meta:
 		model = PersonScene
+		exclude = {'scene','user',}
 		widgets = {
 			'essay' : forms.Textarea(),
 			'video_loc' : forms.FileInput(),

@@ -32,9 +32,9 @@ class Scene(models.Model):
     
 class PersonScene(models.Model):
     essay = models.TextField(blank=True)
-    video_loc = models.CharField(max_length=240,blank=True)
-    music_loc = models.CharField(max_length=240,blank=True)
-    photo_loc = models.CharField(max_length=240,blank=True)
+    video_loc = models.FileField(upload_to='video',blank=True)
+    music_loc = models.FileField(upload_to='music',blank=True)
+    photo_loc = models.ImageField(upload_to='image',blank=True)
     scene = models.ForeignKey(Scene,null=True, blank=True, default = None)
     user = models.ForeignKey(User,null=True, blank=True, default = None)
 
