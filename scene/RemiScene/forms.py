@@ -59,3 +59,13 @@ class SceneForm(forms.ModelForm):
 			'location': forms.TextInput(attrs={'class': ''}),
 			'image_loc': forms.FileInput(attrs={'class': 'btn'})
 		}
+
+class PersonSceneForm(forms.ModelForm):
+	class Meta:
+		model = PersonScene
+		widgets = {
+			'essay' : forms.Textarea(),
+			'video_loc' : forms.FileInput(),
+			'music_loc' : forms.FileInput(),
+			'photo_loc' : forms.FileInput()
+		}
