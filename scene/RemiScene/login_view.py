@@ -17,11 +17,13 @@ from django.core.urlresolvers import reverse
 # Used to send mail from within Django
 from django.core.mail import send_mail
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, StreamingHttpResponse
 from mimetypes import guess_type
 
 from RemiScene.models import *
 from RemiScene.forms import *
+
+import sys
 
 def my_login(request):
 	context = {}
@@ -152,8 +154,31 @@ def get_photo(request,username,id,type):
 			if not personScene.photo_loc:
 				return HttpResponse("")
 			content_type = guess_type(personScene.photo_loc.name)
-			return HttpResponse(personScene.photo_loc,mimetype=content_type)
+			return HttpResponse(personScene.photo_loc,content_type=content_type)
 
 
 	except:
+		return HttpResponse("error-1")
+
+def get_music(request,username,id,type):
+	try:
+		type = int(type)
+		if type == 0:
+			user = User.objects.get(username=username)
+			profile = user.get_profile()
+			return StreamingHttpResponse(profile.music_id,content_type='audio/mp3')
+
+		elif type == 1:
+			scene = Scene.objects.get(id=id)
+			content_type = guess_type()
+
+		elif type == 2:
+			personScene = PersonScene.objects.get(id=id)
+			
+			#content_type = guess_type(personScene.music_loc)
+			print(personScene.music_loc)
+			return HttpResponse(personScene.music_loc,content_type='audio/mp3')
+	except:
+		e = sys.exc_info()
+		print(e)
 		return HttpResponse("error-1")
