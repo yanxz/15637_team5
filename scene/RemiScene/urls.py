@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^search_people$', 'RemiScene.home_view.search_people', name='search_people'),
     url(r'^add_friend/(?P<userid>\d+)$', 'RemiScene.home_view.add_friend', name='add_friend'),
     url(r'^message$', 'RemiScene.home_view.message', name='message'),
+    url(r'^all$', 'RemiScene.home_view.all_scenes', name='all_scenes'),
 
     url(r'^login$','RemiScene.login_view.my_login',name='login'),
     url(r'^register$','RemiScene.login_view.register',name='register'),
