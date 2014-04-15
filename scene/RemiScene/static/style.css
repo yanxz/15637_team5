@@ -114,6 +114,7 @@ a.rm, a.com {
 	padding:0;
 	margin:0 auto;
 	width:923px;
+	overflow: hidden;
 }
 .mainbar {
 	margin:0;
