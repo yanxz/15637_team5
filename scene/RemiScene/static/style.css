@@ -418,4 +418,45 @@ ol li .send {
 	display:block;
 }
 
+.scene_area {
+position: relative;
+top: 50px;
+}
 
+.scene_container {
+padding-bottom: 50px;
+height:350px;
+width:800px;
+position:relative;
+margin: auto;
+box-shadow: 0 2px 10px 1px;
+background-color:
+}
+
+.scene_image {
+padding: 25px;
+  position:absolute;
+  left:0;
+  right:0;
+  max-height: 300px;
+}
+
+.scene_text {
+z-index:2;
+position:absolute;    
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    left:40px;
+    top:25px;
+}
+
+.scene_content {
+z-index:2;
+position:absolute;    
+    color:black;
+    font-size:15px;
+    left:40px;
+    top:140px;
+    opacity: 0.0;
+}
