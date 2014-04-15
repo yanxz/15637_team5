@@ -111,9 +111,10 @@ a.rm, a.com {
 	background:#78bbe6;
 }
 .content {
-	padding:0;
+	padding:10px 0px 100px 0px;
 	margin:0 auto;
 	width:923px;
+	height: auto;
 	overflow: hidden;
 }
 .mainbar {

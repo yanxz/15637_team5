@@ -45,7 +45,7 @@
 .person_window {
     width: 1000px;
     height: 800px;
-
+    overflow: visible;
 }
 .person_window .rightupbar{
     float: right;
