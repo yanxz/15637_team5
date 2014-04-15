@@ -52,13 +52,13 @@ class SceneForm(forms.ModelForm):
 		model = Scene
 		exclude = ('create_time',)
 		widgets = {
-			'title': forms.TextInput(attrs={'class': 'input-block-level'}),
-			'description': forms.Textarea(attrs={'class': 'span6 text', 'cols': 60}),
-			'occur_time': forms.DateInput(attrs={'class': ''}),
-			'tag': forms.Select(attrs={'class': ''}),
-			'loc_lat': forms.TextInput(attrs={'class': ''}),
-			'loc_lng': forms.TextInput(attrs={'class': ''}),
-			'image_loc': forms.FileInput(attrs={'class': 'btn'})
+			'title': forms.TextInput(attrs={'class': 'form-control'}),
+			'description': forms.Textarea(attrs={'class': 'form-control'}),
+			'occur_time': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD HH:MM'}),
+			'tag': forms.Select(attrs={'class': 'form-control'}),
+			'loc_lat': forms.TextInput(attrs={'class': 'form-control'}),
+			'loc_lng': forms.TextInput(attrs={'class': 'form-control'}),
+			'image_loc': forms.FileInput(attrs={'size': '60'})
 		}
 
 class PersonSceneForm(forms.ModelForm):
