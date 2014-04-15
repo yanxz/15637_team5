@@ -24,11 +24,11 @@ class Scene(models.Model):
         (OTHER, 'party'),
             )
     tag = models.CharField(max_length=5, choices=TAG, default=OTHER)
-    location = models.ForeignKey(Location,null=True, blank=True, default = None)
+    loc_lat = models.FloatField(null=True, blank=True)
+    loc_lng = models.FloatField(null=True, blank=True)
 
     def __unicode__(self):
         return self.title
-
     
 class PersonScene(models.Model):
     essay = models.TextField(blank=True)

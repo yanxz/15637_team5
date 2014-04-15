@@ -56,7 +56,8 @@ class SceneForm(forms.ModelForm):
 			'description': forms.Textarea(attrs={'class': 'span6 text', 'cols': 60}),
 			'occur_time': forms.DateInput(attrs={'class': ''}),
 			'tag': forms.Select(attrs={'class': ''}),
-			'location': forms.TextInput(attrs={'class': ''}),
+			'loc_lat': forms.TextInput(attrs={'class': ''}),
+			'loc_lng': forms.TextInput(attrs={'class': ''}),
 			'image_loc': forms.FileInput(attrs={'class': 'btn'})
 		}
 
