@@ -66,8 +66,18 @@ class PersonSceneForm(forms.ModelForm):
 		model = PersonScene
 		exclude = {'scene','user',}
 		widgets = {
-			'essay' : forms.Textarea(),
-			'video_loc' : forms.FileInput(),
-			'music_loc' : forms.FileInput(),
-			'photo_loc' : forms.FileInput()
+			'essay' : forms.Textarea(attrs={'class': 'form-control'}),
+			'video_loc' : forms.FileInput(attrs={'class': 'form-control'}),
+			'music_loc' : forms.FileInput(attrs={'class': 'form-control'}),
+			'photo_loc' : forms.FileInput(attrs={'class': 'form-control'})
+		}
+
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		exclude = {'token','user',}
+		widgets = {
+			'id_photo':forms.FileInput(attrs={'class': 'form-control'}),
+			'bg_pic':forms.FileInput(attrs={'class': 'form-control'}),
+			'music_id':forms.FileInput(attrs={'class': 'form-control'})
 		}

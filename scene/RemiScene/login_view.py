@@ -188,3 +188,22 @@ def get_music(request,username,id,type):
 		e = sys.exc_info()
 		print(e)
 		return HttpResponse("error-1")
+
+@login_required
+def edit_profile(request):
+	profile = request.user.get_profile()
+	#person_scene = PersonScene()
+	
+	if request.method == "GET":
+		form = ProfileForm(instance=profile)
+		context = {"form":form}
+		return render(request,"RemiScene/edit_profile.html",context)
+
+	form = ProfileForm(request.POST,request.FILES,instance=profile)
+
+	if not form.is_valid():
+		context = {"form":form}
+		return render(request,"RemiScene/edit_profile.html",context)
+	form.save()
+	profile.save()
+	return redirect(reverse('home'))

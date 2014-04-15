@@ -94,7 +94,9 @@
 				
 
 				<div class="rightbottombar">
+				{% if user.id == person_scene.user.id %}
 					<a href="{% url 'edit_person_scene' person_scene.id %}" class="btn btn-primary">edit</a>
+				{% endif %}
 				</div>
 		    	
 		    </div>

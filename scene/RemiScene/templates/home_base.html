@@ -6,8 +6,8 @@
 </div>
 {% block head_portrait%}
 <div class="avatar">
-    
+    <a href="{% url 'edit_profile' %}">
         <img src="{% url 'get_photo' user.username 1 0 %}" width="177" onload="cutPhotoImg(this,177);" height="177" />
-    
+    </a>
 </div>
 {% endblock %}

@@ -66,15 +66,17 @@
 
         var markers = [];
         {% for scene in scenes %}
+        if ("{{scene.loc_lat}}" != "None") {
           var latLng = new google.maps.LatLng({{ scene.loc_lat }}, {{ scene.loc_lng }});
           var marker = new google.maps.Marker({
             map: map,
             position: latLng,
           });
-          var contentString = '<div><p>{{ scene.title }}</p>' + '<p>{{ scene.description }}</p>' + "<a href = \"" + "{% url 'scene_home' scene.id %}" +"\">" + 'Go to scene</a></div>';
+          var contentString = '<div><p>{{ scene.title }}</p>' + /*'<p>{{ scene.description }}</p>' +*/ "<a href = \"" + "{% url 'scene_home' scene.id %}" +"\">" + 'Go to scene</a></div>';
           addInfoWindow(marker, contentString);
 
           markers.push(marker);
+          }
         {% endfor %}
         var markerCluster = new MarkerClusterer(map, markers);
       }
