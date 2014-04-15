@@ -69,17 +69,19 @@ def add_scene(request):
     form.save()
     print("passed form validation!")
     friends = request.POST['friends']
-    friends_list = re.compile(r',').split(friends)
+    
+    if len(friends) > 0:
+        friends_list = re.compile(r',').split(friends)
 
-    for friend_name in friends_list:
-        friend_name = friend_name.strip();
-        names= re.compile(r' ').split(friend_name, 2)
-        user = User.objects.filter(first_name=names[0], last_name=names[1])
-        if len(user) <= 0:
-            continue
+        for friend_name in friends_list:
+            friend_name = friend_name.strip();
+            names= re.compile(r' ').split(friend_name, 2)
+            user = User.objects.filter(first_name=names[0], last_name=names[1])
+            if len(user) <= 0:
+                continue
 
-        new_person_scene = PersonScene(user=user[0], scene=new_Scene)
-        new_person_scene.save()
+            new_person_scene = PersonScene(user=user[0], scene=new_Scene)
+            new_person_scene.save()
 
     new_person_scene = PersonScene(user=request.user, scene=new_Scene)
     new_person_scene.save()
