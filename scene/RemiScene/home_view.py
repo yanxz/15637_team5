@@ -69,7 +69,7 @@ def add_scene(request):
     form.save()
     print("passed form validation!")
     friends = request.POST['friends']
-    
+
     if len(friends) > 0:
         friends_list = re.compile(r',').split(friends)
 
@@ -131,3 +131,20 @@ def message(request):
     messages = Message.get_messages(request.user)
     context = {'messages' : messages}
     return render(request, "RemiScene/message.html", context)
+
+@login_required
+def all_scenes(request):
+    users = [request.user]
+    friends = Friends.get_friends(request.user)
+    if len(friends) > 0:
+        for user in friends[0].friends.all():
+            users.append(user)
+            
+    scene_set = []
+    for user in users:
+        person_scenes = PersonScene.get_personScenes_from_user(user)
+        for ps in person_scenes:
+            scene_set.append(ps.scene)
+
+    scene_set = sorted(scene_set, key = lambda x : x.occur_time, reverse=True)
+    return render(request, 'RemiScene/all_scenes.html', {'scenes' : scene_set})

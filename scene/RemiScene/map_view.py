@@ -39,8 +39,8 @@ def home(request):
     friends = Friends.get_friends(request.user)
     if len(friends) > 0:
         for user in friends[0].friends.all():
-            users.add(user)
-            
+            users.append(user)
+
     scene_set = []
     for user in users:
         person_scenes = PersonScene.get_personScenes_from_user(user)
