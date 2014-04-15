@@ -13,7 +13,8 @@
 				    type : 1,
 				    title : false,
 				    fix : false,
-				    offset:['150px' , '520px'],
+				    //offset:['150px' , '520px'],
+				    offset:['50%','50%'],
 				    area : ['1000px','800px'],
 				    closeBtn : [0,false],
 				    page : {dom : '#'+aa},
@@ -28,7 +29,7 @@
 	$(document).ready(function(){
 		var list = $("p.essay").toArray();
 		for (var i = 0; i < list.length; i++) {
-			var str = list[i].innerHTML.trim().substr(0,20);
+			var str = list[i].innerHTML.trim().substr(0,30);
 			list[i].innerHTML = str;
 		}
 	});
@@ -49,7 +50,9 @@
 		<!--<a href="{% url 'edit_person_scene' person_scene.id %}">-->
 		<div class="triangle-border left" onclick="func({{person_scene.id}})">
 			<div>
+				<p class="essay">
 		    	{{person_scene.essay}}
+		    	</p>
 		    </div>
 
 		</div>
@@ -63,9 +66,9 @@
 {% for person_scene in person_scenes %}
 			<div id="{{person_scene.id}}" style="display:none; min-height:50px;" class="person_window">
 		    	<div class="rightupbar">
-		    		<p class="essay">
+		    		
 		    		{{person_scene.essay}}
-		    		</p>
+		    		
 		    	</div>
 		    	
 		    	<div class="leftupbar">
