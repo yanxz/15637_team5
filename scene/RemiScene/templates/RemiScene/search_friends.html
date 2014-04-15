@@ -1,0 +1,18 @@
+{% extends "home_base.html" %}
+
+{% block content %}
+	<p>Hi, {{ user.first_name }} {{ user.last_name }}</p>
+	<form method="post" action="{% url 'search_people' %}">
+		Type in the name of the person:<input type="text" name="name"><br>
+		<input type="submit" value="search">
+	{% csrf_token %}
+	</form>
+	{% for user in result_users %}
+	<div>
+		<a class="btn" href = "{% url 'friend_home' user.id %}" type="button">{{ user.first_name }} {{ user.last_name }}</a>
+	</div>
+	{% endfor %}
+	{% if add_friend_result %}
+		{{ add_friend_result }}
+	{% endif %}
+{% endblock %}
