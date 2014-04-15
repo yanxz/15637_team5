@@ -156,6 +156,12 @@ def get_photo(request,username,id,type):
 			content_type = guess_type(personScene.photo_loc.name)
 			return HttpResponse(personScene.photo_loc,content_type=content_type)
 
+		elif type == 3:
+			user = User.objects.get(username=username)
+			profile = user.get_profile()
+			content_type = guess_type(profile.bg_pic.name)
+			return HttpResponse(profile.bg_pic,content_type=content_type)
+
 
 	except:
 		return HttpResponse("error-1")
