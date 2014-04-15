@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
     {% load static %}
+    <title>RemiScene</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="../static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../static/js/script.js"></script>
+    <script type="text/javascript" src="../static/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="../static/js/arial.js"></script>
+    <script type="text/javascript" src="../static/js/cuf_run.js"></script>
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
+      #map-canvas { 
+        width: 60%;
+        height: 600px; 
+        margin:auto;
+        padding-bottom: 20px;
+      }
     </style>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZSWHRKqyMc9_0-NZuHCNVHxyvQGHTOhk&sensor=true">
@@ -65,8 +79,53 @@
         var markerCluster = new MarkerClusterer(map, markers);
       }
     </script>
-  </head>
-  <body>
-    <div id="map-canvas"/>
-  </body>
+</head>
+
+<body>
+    <div class="main">
+        <div class="main_resize">
+            <!-- header -->
+            <div class="header">
+                <div class="logo">
+                    <h1><span>Remi</span>Scene<small></small></h1>
+                </div>
+                <div class="search">
+                    <form method="post" id="search" action="{% url 'search_people' %}">
+                        <span>
+              <input type="text" value="Search People..." name="name" id="s" />
+                            {% csrf_token %}
+              <input name="searchsubmit" type="image" src="{% static 'images/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
+                            {% csrf_token %}
+            </span>
+                        {% csrf_token %}
+                    </form>
+                    <div class="clr"></div>
+                </div>
+                <div class="menu_nav">
+                    <ul>
+                        <li class="active"><a href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li><a href="{% url 'search_friend' %}">Friends</a>
+                        </li>
+                        <li><a href="{% url 'map_home' %}">Map</a>
+                        </li>
+                        <li><a href="{% url 'all_scenes' %}">All Scenes</a>
+                        </li>
+                        <li><a href="{% url 'message' %}">Message</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- content -->
+            
+        </div>
+    <div class="text-center" style="margin-top:-70px;">
+      <h1>Scenes Around You:</h1>
+    </div>
+    <div id="map-canvas"/></div>
+    </div>
+
+    
+</body>
+
 </html>
