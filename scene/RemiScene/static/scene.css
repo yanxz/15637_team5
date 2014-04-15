@@ -55,6 +55,8 @@
     width: 333px;
     margin: 0px;
     font-size: 20px;
+    padding: 10px;
+    font-family: monospace;
 }
 
 .person_window .rightbottombar{
@@ -64,6 +66,7 @@
     height: 100px;
     width: 333px;
     margin: 0px;
+
 }
 
 .person_window .leftupbar{
@@ -78,7 +81,6 @@
 }
 
 .person_window .leftupbar img{
-    /*margin-top: expression((700-this.height)/2);*/
     max-width: 100%;
     height: auto;
     margin: auto;
@@ -98,11 +100,20 @@
     margin: 0;
 }
 
-.person_window .leftbottombar embed{
-    border: 20px;
-    max-width: 100%;
-    height: auto;
-    margin: auto;
+.person_window .leftbottombar .audio{
+    position: relative;
+}
+
+.person_window .leftbottombar audio{
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    margin:auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.essay {
+    font-family: monospace;
+    font-size: 20px;
 }

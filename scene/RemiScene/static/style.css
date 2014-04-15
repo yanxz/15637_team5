@@ -152,6 +152,14 @@ a.rm, a.com {
 	float:left;
 	width:285px;
 }
+
+.sidebar img{
+	float: right;
+	margin-right: 50px;
+	margin-top: 20px;
+	width: 100px;
+	height: 100px;
+}
 .sidebar .gadget {
 	margin:0;
 	padding:10px 15px 10px 0;

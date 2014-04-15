@@ -66,7 +66,7 @@
 {% for person_scene in person_scenes %}
 			<div id="{{person_scene.id}}" style="display:none; min-height:50px;" class="person_window">
 		    	<div class="rightupbar">
-		    		
+		    		<div class="clr"></div>
 		    		{{person_scene.essay}}
 		    		
 		    	</div>
@@ -81,13 +81,15 @@
 		    	
 
 		    	
-		    	<div clas="leftbottombar">
+		    	<div class="leftbottombar">
 		    	{% if person_scene.music_loc %}
-		    		<audio controls="controls" height="100" width="100">
+		    	
+		    		<audio controls="controls" >
 					  <source src="{% url 'get_music' 1 person_scene.id 2%}" type="audio/mp3" />
 						<embed height="100" width="100" src="{% url 'get_music' 1 person_scene.id 2%}" />
 					</audio>
-					{% endif %}
+				
+				{% endif %}
 				</div>
 				
 
