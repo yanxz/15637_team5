@@ -3,31 +3,69 @@
 {% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "scene.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "triangle.css" %}">
+	<script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
+	<script type="text/javascript" src="http://mediaplayer.yahoo.com/js"></script>
+	<script type="text/javascript">
+	function func(aa){
+		//var layer = $.layer({});
+		//layer.msg("asfasdf");
+		var i = $.layer({
+				    type : 1,
+				    title : false,
+				    fix : false,
+				    offset:['50px' , ''],
+				    area : ['515px','615px'],
+				    closeBtn : [0,false],
+				    page : {dom : '#'+aa}
+				});
+		$('#'+aa).dblclick(function(){
+			layer.close(i);
+		});
+	}
+	</script>
+<!--
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$(".rightbar").click(function(){
+			layer.alert('asdfasdf');
+		});
+	});
+	</script>
+	-->
 {% endblock %}
 
 {% block content %}
+	<div onclick="layer.alert('ririri')">riririri</div>
+
 	{% for person_scene in person_scenes %}
 	<div class="sidebar">
 		<img src="{% url 'get_photo' person_scene.user.username 1 0%}">
 	</div>
 
-	<div class="rightbar">
-		<a href="{% url 'edit_person_scene' person_scene.id %}">
+	<div class="rightbar" onclick="func({{person_scene.id}})">
+		<!--<a href="{% url 'edit_person_scene' person_scene.id %}">-->
 		<div class="triangle-border left">
 			<div>
 		    	{{person_scene.essay}}
 		    </div>
-		    <div>
+		    <div id="{{person_scene.id}}" style="display:none;">
 		    	{% if person_scene.photo_loc %}
 		    		<img src="{% url 'get_photo' 1 person_scene.id 2 %}">
 		    	{% endif %}
 
 		    	{% if person_scene.music_loc %}
-		    		<embed src="{% url 'get_music' 1 person_scene.id 2%}" width="200" height="200">
+		    	<!--
+		    		<embed src="{% url 'get_music' 1 person_scene.id 2%}" width="200" height="200" autostart=false>
+		    		-->
+		    		<audio controls="controls" height="100" width="100">
+					  <source src="{% url 'get_music' 1 person_scene.id 2%}" type="audio/mp3" />
+					  <source src="{% url 'get_music' 1 person_scene.id 2%}" type="audio/ogg" />
+					<embed height="100" width="100" src="{% url 'get_music' 1 person_scene.id 2%}" />
+					</audio>
 		    	{% endif %}
 		    </div>
 		</div>
-		</a>
+		
 	</div>
 	{% endfor %}
 {% endblock %}
