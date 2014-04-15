@@ -1,18 +1,31 @@
 {% extends "home_base.html" %}
 
 {% block content %}
-	<p>Hi, {{ user.first_name }} {{ user.last_name }}</p>
-	<form method="post" action="{% url 'search_people' %}">
-		Type in the name of the person:<input type="text" name="name"><br>
-		<input type="submit" value="search">
-	{% csrf_token %}
-	</form>
-	{% for user in result_users %}
-	<div>
-		<a class="btn" href = "{% url 'add_friend' user.id %}" type="button">{{ user.first_name }} {{ user.last_name }}</a>
-	</div>
-	{% endfor %}
-	{% if add_friend_result %}
-		{{ add_friend_result }}
-	{% endif %}
+	<div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
+		<div class="well well-sm">
+			<div style="padding-right:80px">
+			<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="form-group">
+				<h2 style="text-align:center; padding-left:100px;">Hi, {{ user.first_name }} {{ user.last_name }}</h2>
+				<form class="form-group" method="post" action="{% url 'search_people' %}">
+					<span style="padding-left : 150px">
+						<label class="ontrol-label">Type in the name of the person:</label>
+						<input type="text" name="name"><br>
+					</span>
+					<span class="col-md-12 text-center" style="padding-left : 100px; top:15px">
+						<input type="submit" value="search" class="btn btn-lg btn-primary"/>
+					</span>
+				{% csrf_token %}
+				</form>
+
+				{% for user in result_users %}
+				<div>
+					<span class="control-label" style="padding-left:280px; top:40px; font-size:20px">{{ user.first_name }} {{ user.last_name }}</span>
+					<a class="btn" href = "{% url 'add_friend' user.id %}" type="button" class="btn btn-lg btn-primary">add to friend</a>
+				</div>
+				{% endfor %}
+
+		{% if add_friend_result %}
+			{{ add_friend_result }}
+		{% endif %}
+
 {% endblock %}
