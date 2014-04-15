@@ -82,6 +82,7 @@ a.rm, a.com {
 .menu_nav {
 	margin:0 0 10px;
 	padding:0;
+	height: 150px;
 }
 .menu_nav ul {
 	list-style:none;
@@ -383,6 +384,7 @@ ol li .send {
 	position: relative;
 	z-index: 1000;
 	min-height: 202px;
+
 }
 
 #cover .avatar {
