@@ -13,59 +13,85 @@
 				    type : 1,
 				    title : false,
 				    fix : false,
-				    offset:['50px' , ''],
-				    area : ['515px','615px'],
-				    closeBtn : [0,true],
-				    page : {dom : '#'+aa}
+				    offset:['150px' , '520px'],
+				    area : ['1000px','800px'],
+				    closeBtn : [0,false],
+				    page : {dom : '#'+aa},
+				    shade : [0.5 , '#000' , true],
+				    shadeClose : true
 				});
+		/*
 		$('.xubox_main').dblclick(function(){
 			layer.close(i);
-		});
+		});*/
 	}
-	</script>
-<!--
-	<script type="text/javascript">
 	$(document).ready(function(){
-		$(".rightbar").click(function(){
-			layer.alert('asdfasdf');
-		});
+		var list = $("p.essay").toArray();
+		for (var i = 0; i < list.length; i++) {
+			var str = list[i].innerHTML.trim().substr(0,20);
+			list[i].innerHTML = str;
+		}
 	});
+
 	</script>
-	-->
+
 {% endblock %}
 
 {% block content %}
-	<div onclick="layer.alert('ririri')">riririri</div>
 
 	{% for person_scene in person_scenes %}
+	<div >
 	<div class="sidebar">
 		<img src="{% url 'get_photo' person_scene.user.username 1 0%}">
 	</div>
 
-	<div class="rightbar" onclick="func({{person_scene.id}})">
+	<div class="mainbar" >
 		<!--<a href="{% url 'edit_person_scene' person_scene.id %}">-->
-		<div class="triangle-border left">
+		<div class="triangle-border left" onclick="func({{person_scene.id}})">
 			<div>
 		    	{{person_scene.essay}}
 		    </div>
-		    <div id="{{person_scene.id}}" style="display:none; min-height:50px;">
-		    	{% if person_scene.photo_loc %}
-		    		<img src="{% url 'get_photo' 1 person_scene.id 2 %}">
-		    	{% endif %}
 
-		    	{% if person_scene.music_loc %}
-		    	<!--
-		    		<embed src="{% url 'get_music' 1 person_scene.id 2%}" width="200" height="200" autostart=false>
-		    		-->
-		    		<audio controls="controls" height="100" width="100">
-					  <source src="{% url 'get_music' 1 person_scene.id 2%}" type="audio/mp3" />
-					  <source src="{% url 'get_music' 1 person_scene.id 2%}" type="audio/ogg" />
-					<embed height="100" width="100" src="{% url 'get_music' 1 person_scene.id 2%}" />
-					</audio>
-		    	{% endif %}
-		    </div>
 		</div>
 		
 	</div>
+	</div>
 	{% endfor %}
+{% endblock %}
+
+{% block hidden %}
+{% for person_scene in person_scenes %}
+			<div id="{{person_scene.id}}" style="display:none; min-height:50px;" class="person_window">
+		    	<div class="rightupbar">
+		    		<p class="essay">
+		    		{{person_scene.essay}}
+		    		</p>
+		    	</div>
+		    	
+		    	<div class="leftupbar">
+		    	{% if person_scene.photo_loc %}
+		    		<div class="center">
+		    			<img src="{% url 'get_photo' 1 person_scene.id 2 %}" class="center">
+		    		</div>
+		    	{% endif %}
+		    	</div>
+		    	
+
+		    	
+		    	<div clas="leftbottombar">
+		    	{% if person_scene.music_loc %}
+		    		<audio controls="controls" height="100" width="100">
+					  <source src="{% url 'get_music' 1 person_scene.id 2%}" type="audio/mp3" />
+						<embed height="100" width="100" src="{% url 'get_music' 1 person_scene.id 2%}" />
+					</audio>
+					{% endif %}
+				</div>
+				
+
+				<div class="rightbottombar">
+					<a href="{% url 'edit_person_scene' person_scene.id %}" class="btn btn-primary">edit</a>
+				</div>
+		    	
+		    </div>
+		    {% endfor %}
 {% endblock %}
