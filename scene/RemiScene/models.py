@@ -90,7 +90,7 @@ class Message(models.Model):
 class Profile(models.Model):
     user = models.ForeignKey(User,unique=True)
     id_photo = models.ImageField(upload_to='image',default='image/default.png')
-    bg_pic = models.ImageField(upload_to='image',blank=True)
+    bg_pic = models.ImageField(upload_to='image',default='image/apple.jpg')
     music_id = models.FileField(upload_to='music',blank=True)
     token = models.CharField(max_length = 50)
 
