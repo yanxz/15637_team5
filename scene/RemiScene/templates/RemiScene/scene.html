@@ -15,10 +15,10 @@
 				    fix : false,
 				    offset:['50px' , ''],
 				    area : ['515px','615px'],
-				    closeBtn : [0,false],
+				    closeBtn : [0,true],
 				    page : {dom : '#'+aa}
 				});
-		$('#'+aa).dblclick(function(){
+		$('.xubox_main').dblclick(function(){
 			layer.close(i);
 		});
 	}
@@ -48,7 +48,7 @@
 			<div>
 		    	{{person_scene.essay}}
 		    </div>
-		    <div id="{{person_scene.id}}" style="display:none;">
+		    <div id="{{person_scene.id}}" style="display:none; min-height:50px;">
 		    	{% if person_scene.photo_loc %}
 		    		<img src="{% url 'get_photo' 1 person_scene.id 2 %}">
 		    	{% endif %}
