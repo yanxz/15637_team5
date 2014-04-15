@@ -1,0 +1,11 @@
+{% extends "home_base.html" %}
+
+{% block content %}
+	{% for message in messages %}
+		<label>{{ message.from_user }}</label>
+		<p>{{ message.content }}</p>
+		{% if message.content == "I have added you as a SceneFriend." %}
+			<a class="btn" href = "{% url 'add_friend' message.from_user.id %}" type="button">Add SceneFriend</a>
+		{% endif %}
+	{% endfor %}
+{% endblock %}

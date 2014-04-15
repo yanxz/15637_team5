@@ -1,25 +1,53 @@
-from django.shortcuts import render
-from django.core.urlresolvers import reverse
-from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
+# Decorator to use built-in authentication system
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
 
+# Used to create and manually log in a user
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.tokens import *
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import *
 
-from django.core.mail import send_mail
+from mimetypes import guess_type
+
 from django.http import HttpResponse, Http404
+
+from RemiScene.forms import *
+from RemiScene.models import *
+
+# Used to send mail from within Django
+from django.core.mail import send_mail
+
+# Used to reverse url
+from django.core.urlresolvers import reverse
+
+# User to combain queryset
+from itertools import chain
+from operator import attrgetter
 
 from datetime import datetime, date, time
 from mimetypes import guess_type
+from itertools import chain
 
-import string
-import random
+import re
 
 def home(request):
-    return render(request, 'RemiScene/map.html')
+    users = [request.user]
+    friends = Friends.get_friends(request.user)
+    if len(friends) > 0:
+        for user in friends[0].friends.all():
+            users.add(user)
+            
+    scene_set = []
+    for user in users:
+        person_scenes = PersonScene.get_personScenes_from_user(user)
+        for s in person_scenes:
+            scene_set.append(s.scene)
+
+    return render(request, 'RemiScene/map.html', {'scenes' : scene_set})
 
 # register page.
 def plain_search(request):

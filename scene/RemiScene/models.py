@@ -24,11 +24,11 @@ class Scene(models.Model):
         (OTHER, 'party'),
             )
     tag = models.CharField(max_length=5, choices=TAG, default=OTHER)
-    location = models.ForeignKey(Location,null=True, blank=True, default = None)
+    loc_lat = models.FloatField(null=True, blank=True)
+    loc_lng = models.FloatField(null=True, blank=True)
 
     def __unicode__(self):
         return self.title
-
     
 class PersonScene(models.Model):
     essay = models.TextField(blank=True)
@@ -68,6 +68,12 @@ class Friends(models.Model):
     @staticmethod
     def get_friends(user):
         return Friends.objects.filter(user=user)
+
+    def __unicode__(self):
+        friend_names = ""
+        for friend in self.friends.all():
+            friend_names += friend.first_name + " " + friend.last_name + " "
+        return self.user.first_name + " " + self.user.last_name + " -> " + friend_names
 
 class Message(models.Model):
     create_time = models.DateTimeField()
