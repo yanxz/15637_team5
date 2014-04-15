@@ -32,43 +32,65 @@
 
 </style>
 
-<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="control-group">
-	<h2 style="text-align:center;">Create Scene</h2>
-	<div class="control-group">
-		<label>Title</label>
-		{{ form.title }}
+<div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
+	<div class="well well-sm">
+		<div style="padding-right:80px">
+		<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="form-group">
+			<h2 style="text-align:center; padding-left:100px;">Create Scene</h2>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Title</label>
+				<div class="col-md-9">
+					{{ form.title }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Description</label>
+				<div class="col-md-9">
+					{{ form.description }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Time</label>
+				<div class="col-md-9">
+					{{ form.occur_time }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Tag</label>
+				<div class="col-md-9">
+					{{ form.tag }}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Locationx</label>
+				<div class="col-md-3">
+					{{ form.loc_lat }}
+				</div>
+				<label class="col-md-3 control-label">Locationy</label>
+				<div class="col-md-3">
+					{{ form.loc_lng }}
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-md-3 control-label">Friends in the site</label>
+				<div class="col-md-9">
+					<input type="text" name="friends" class="form-control" placeholder="John Lennon, Jeff Eppinger"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-3 control-label">Image</label>
+				<div class="col-md-3"> {{ form.image_loc }}</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12 text-center" style="padding-left : 100px">
+					<input type="submit" value="Submit" class="btn btn-lg btn-primary"/>
+				</div>
+			</div>
+		{% csrf_token %}
+		</form>
+		</div>
 	</div>
-	<div class="control-group">
-		<label>Description</label>
-		{{ form.description }}
-	</div>
-	<div class="control-group">
-		<label>Time</label>
-		{{ form.occur_time }}
-	</div>
-	<div class="control-group">
-		<label>Tag</label>
-		{{ form.tag }}
-	</div>
-	<div class="control-group">
-		<label>Locationx</label>
-		{{ form.loc_lat }}
-	</div>
-	<div class="control-group">
-		<label>Locationy</label>
-		{{ form.loc_lng }}
-	</div>
-	<div class="control-group">
-		<label>Image</label>
-		{{ form.image_loc }}
-	</div>
-	<div class="control-group">
-		<label>Friends in the site</label>
-		<input type="text" name="friends"/>
-	</div>
-
-	
-	<input type="submit" value="Create Scene" class="btn btn-lg btn-primary" style="margin-bottom : 40px"/>
-{% csrf_token %}
+</div>
 
 {% endblock %}
