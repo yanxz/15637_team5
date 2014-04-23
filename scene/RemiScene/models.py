@@ -1,8 +1,17 @@
 from django.db import models
 from django.db.models.signals import *
 from django.contrib.auth.models import User
-
+from datetime import *
+import os
+import random
 # initial push version
+
+def get_photo_path(instance, filename):
+    date = datetime.now().strftime('%Y%m')
+    fname, ext = os.path.splitext(filename)
+    return 'image/%s/%d%s' %(date,random.randint(0,1000),ext.lower(),)
+
+
 class Location(models.Model):
     longitude = models.IntegerField()
     latitude = models.IntegerField()
@@ -34,7 +43,7 @@ class PersonScene(models.Model):
     essay = models.TextField(blank=True)
     video_loc = models.FileField(upload_to='video',blank=True)
     music_loc = models.FileField(upload_to='music',blank=True)
-    photo_loc = models.ImageField(upload_to='image',blank=True)
+    #photo_loc = models.ImageField(upload_to=get_photo_path,blank=True)
     scene = models.ForeignKey(Scene,null=True, blank=True, default = None)
     user = models.ForeignKey(User,null=True, blank=True, default = None)
 
@@ -86,6 +95,19 @@ class Message(models.Model):
     @staticmethod
     def get_messages(user):
         return Message.objects.filter(to_user=user).order_by('-create_time')
+
+'''
+class Album(models.Model):
+    user = models.ForeignKey(User,unique=True)
+    person_scene = models.ForeignKey(PersonScene,unique=True)
+    title = models.CharField(max_length=255)
+'''
+class PersonScene_photo(models.Model):
+    #user = models.ForeignKey(User,unique=True)
+    person_scene = models.ForeignKey(PersonScene,null=True, blank=True, default = None)
+    photo = models.ImageField(upload_to=get_photo_path)
+    create_time = models.DateTimeField(auto_now_add=True)
+
 
 class Profile(models.Model):
     user = models.ForeignKey(User,unique=True)

@@ -53,10 +53,23 @@
 	</div>
   -->
   {{form}}
-	
-
+	<input type="file" multiple="multiple" name="photo" id="photo">
+  <div id="content"></div>
+  <script>  
+    var inputElement = document.getElementById("input");    
+    inputElement.addEventListener("change", handleFiles, false);  
+  
+    function handleFiles(){  
+    var fileList = this.files;  
+       var dd = document.getElementById('content');  
+    for( var i = 0 ; i < fileList.length ; i++ ){  
+           dd.innerHTML += fileList[i].name+"<br>";  
+    }  
+}  
+   </script>
 	
 	<input type="submit" value="Create Scene" class="btn btn-lg btn-primary" style="margin-bottom : 40px"/>
 {% csrf_token %}
+</form>
 
 {% endblock %}

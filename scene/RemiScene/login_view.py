@@ -120,6 +120,14 @@ def edit_person_scene(request,id):
 		return render(request,"RemiScene/edit_person_scene.html",context)
 	form.save()
 	person_scene.save()
+	if 'photo' in request.FILES:
+		photos = request.FILES.getlist('photo')
+		print(len(photos))
+		for photo in photos:
+			print(photo)
+			newPhoto = PersonScene_photo(person_scene=person_scene,photo=photo)
+			newPhoto.save()
+
 	return redirect(reverse('home'))
 
 #type: 0,profile  1,scene  2,personScene

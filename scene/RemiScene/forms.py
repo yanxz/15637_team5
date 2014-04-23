@@ -68,8 +68,8 @@ class PersonSceneForm(forms.ModelForm):
 		widgets = {
 			'essay' : forms.Textarea(attrs={'class': 'form-control'}),
 			'video_loc' : forms.FileInput(attrs={'class': 'form-control'}),
-			'music_loc' : forms.FileInput(attrs={'class': 'form-control'}),
-			'photo_loc' : forms.FileInput(attrs={'class': 'form-control'})
+			'music_loc' : forms.FileInput(attrs={'class': 'form-control'})
+			#'photo_loc' : forms.FileInput(attrs={'class': 'form-control'})
 		}
 
 class ProfileForm(forms.ModelForm):
