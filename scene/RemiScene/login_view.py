@@ -176,36 +176,45 @@ def get_photo(request,username,id,type):
 	except:
 		return HttpResponse("error-1")
 
-#type: -1 left, 1 right, 0 current
-def get_person_scene_photo(request,id,photo_id,type):
+#type: 2 left, 1 right, 0 current
+def get_person_scene_photo(request,id,index,type):
 	try:
+		index = int(index)
+		id = int(id)
 		personScene = PersonScene.objects.get(id=id)
+		print(1)
 		photos = PersonScene_photo.objects.filter(person_scene=personScene)
-		if photo_id == -1:
-			photo = photos.first()
-		elif type == 0:
-			photo = photos.get(id=photo_id)
+		print(2)
+		print(len(photos))
+		if len(photos) == 0 or index < 0 or index >= len(photos):
+			return HttpResponse("")
+
+		#print(photo_id)
+		'''
+		if index == 0:
+			print(3)
+			photo = photos[0]
+			if photo == None:
+				print('rcy')
+			print(4)
+		'''
+		if type == 0:
+			photo = photos[index]
 		elif type == 1:
-			id_list = photos.values_list("id")
-			index = id_list.index(photo_id)
 			if index == len(id_list)-1:
 				index = 0
 			else:
 				index = index + 1
-			new_id = id_list[index]
-			photo = photos.get(id=new_id)
-		elif type == -1:
-			id_list = photos.values_list("id")
-			index = id_list.index(photo_id)
+			photo = photos[index]
+		elif type == 2:
 			if index == 0:
 				index = len(id_list)-1
 			else:
 				index = index-1
-			new_id = id_list[index]
-			photo = photos.get(id=index)
-
-		content_type = guess_type(photo.name)
-		return HttpResponse(photo,content_type=content_type)
+			photo = photos[index]
+		print(5)
+		content_type = guess_type(photo.photo.name)
+		return HttpResponse(photo.photo,content_type=content_type)
 	except:
 		return HttpResponse("error")
 
