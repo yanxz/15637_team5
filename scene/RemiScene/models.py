@@ -33,8 +33,7 @@ class Scene(models.Model):
         (OTHER, 'party'),
             )
     tag = models.CharField(max_length=5, choices=TAG, default=OTHER)
-    loc_lat = models.FloatField(null=True, blank=True)
-    loc_lng = models.FloatField(null=True, blank=True)
+    loc = models.CharField(max_length=240)
 
     def __unicode__(self):
         return self.title

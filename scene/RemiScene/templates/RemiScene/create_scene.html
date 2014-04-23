@@ -31,6 +31,23 @@
   }
 
 </style>
+<script type="text/javascript"
+  	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZSWHRKqyMc9_0-NZuHCNVHxyvQGHTOhk&sensor=true">
+</script>
+<script type="text/javascript">
+	var geocoder;
+	function checkAddress() {
+		geocoder = new google.maps.Geocoder();
+		var address = document.getElementById("address").value;
+		geocoder.geocode( {'address': address}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				document.getElementById("check_result").innerHTML = "Address is recognized."
+			} else {
+				document.getElementById("check_result").innerHTML = "Can't find address."
+			}
+		})
+	}
+</script>
 
 <div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
 	<div class="well well-sm">
@@ -64,11 +81,13 @@
 			<div class="form-group">
 				<label class="col-md-3 control-label">Locationx</label>
 				<div class="col-md-3">
-					{{ form.loc_lat }}
+					{{ form.loc }}
 				</div>
-				<label class="col-md-3 control-label">Locationy</label>
 				<div class="col-md-3">
-					{{ form.loc_lng }}
+					<button type="button" onclick="checkAddress()">Check</button>
+				</div>
+				<div class="col-md-3">
+					<p id="check_result"></p>
 				</div>
 			</div>
 			
