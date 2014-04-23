@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^all$', 'RemiScene.home_view.all_scenes', name='all_scenes'),
 
     url(r'^login$','RemiScene.login_view.my_login',name='login'),
+    url(r'^logout$','RemiScene.login_view.my_login',name='logout'),
     url(r'^register$','RemiScene.login_view.register',name='register'),
     url(r'^confirm/(?P<email>[^/]*)/(?P<token>[^/]*)', 'RemiScene.login_view.confirm', name='confirm'),
     url(r'^ts$','RemiScene.login_view.test'),
