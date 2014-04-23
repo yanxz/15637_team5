@@ -34,6 +34,29 @@
 		}
 	});
 
+
+	$(document).ready(function(){
+	 $(".scene_container").mouseenter(function(){
+	   $(this).find("img").css("opacity","0.4");
+	   $(this).find("span").css("opacity","1.0");
+	   $(this).find("p").css("color","black");
+	   }); 
+	 $(".scene_container").mouseleave(function(){
+	   $(this).find("img").css("opacity","1.0");
+	   $(this).find("span").css("opacity","0.0");
+	   $(this).find("p").css("color","white");
+	   }); 
+	});
+
+
+	function get_photo(person_scene_id,type) {
+		var person_scene = document.getElementById(person_scene_id);
+		var leftupbar = person_scene.getElementsByClassName("leftupbar")[0]
+		var id = leftupbar.getElementsByClassname("photo_id")[0].innerHTML
+		var image = leftupbar.getElementsByTagName("img")[0]
+		image.src = ""
+	}
+
 	</script>
 
 {% endblock %}
@@ -72,11 +95,10 @@
 		    	</div>
 		    	
 		    	<div class="leftupbar">
-		    	{% if person_scene.photo_loc %}
 		    		<div class="center">
-		    			<img src="{% url 'get_photo' 1 person_scene.id 2 %}" class="center">
+		    			<img src="" class="center">
 		    		</div>
-		    	{% endif %}
+		    		<div class="photo_id" hidden='true'>-1</div>
 		    	</div>
 		    	
 

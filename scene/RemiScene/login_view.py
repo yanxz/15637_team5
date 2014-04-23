@@ -135,6 +135,8 @@ def get_photo(request,username,id,type):
 	try:
 		#
 		type = int(type)
+
+		#profile id photo
 		if type == 0:
 			user = User.objects.get(username=username)
 			profile = user.get_profile()
@@ -145,7 +147,7 @@ def get_photo(request,username,id,type):
 				'''
 			content_type = guess_type(profile.id_photo.name)
 			return HttpResponse(profile.id_photo,mimetype=content_type)
-
+		# scene pic (background)
 		elif type == 1:
 			scene = Scene.objects.get(id=id)
 			print(scene.image_loc)
@@ -155,15 +157,15 @@ def get_photo(request,username,id,type):
 				#return HttpResponse('image/',mimetype=content_type)
 			content_type = guess_type(scene.image_loc.name)
 			return HttpResponse(scene.image_loc,mimetype=content_type)
-
+		# person scene photo
 		elif type == 2:
 			personScene = PersonScene.objects.get(id=id)
-			print(personScene.photo_loc)
-			if not personScene.photo_loc:
-				return HttpResponse("")
+			photos = PersonScene_photo.objects.filter(person_scene=personScene).order_by("id")
+			
 			content_type = guess_type(personScene.photo_loc.name)
 			return HttpResponse(personScene.photo_loc,content_type=content_type)
 
+		# profile backgournd photo 
 		elif type == 3:
 			user = User.objects.get(username=username)
 			profile = user.get_profile()
@@ -173,6 +175,39 @@ def get_photo(request,username,id,type):
 
 	except:
 		return HttpResponse("error-1")
+
+#type: -1 left, 1 right, 0 current
+def get_person_scene_photo(request,id,photo_id,type):
+	try:
+		personScene = PersonScene.objects.get(id=id)
+		photos = PersonScene_photo.objects.filter(person_scene=personScene)
+		if photo_id == -1:
+			photo = photos.first()
+		elif type == 0:
+			photo = photos.get(id=photo_id)
+		elif type == 1:
+			id_list = photos.values_list("id")
+			index = id_list.index(photo_id)
+			if index == len(id_list)-1:
+				index = 0
+			else:
+				index = index + 1
+			new_id = id_list[index]
+			photo = photos.get(id=new_id)
+		elif type == -1:
+			id_list = photos.values_list("id")
+			index = id_list.index(photo_id)
+			if index == 0:
+				index = len(id_list)-1
+			else:
+				index = index-1
+			new_id = id_list[index]
+			photo = photos.get(id=index)
+
+		content_type = guess_type(photo.name)
+		return HttpResponse(photo,content_type=content_type)
+	except:
+		return HttpResponse("error")
 
 def get_music(request,username,id,type):
 	try:
