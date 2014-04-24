@@ -118,13 +118,13 @@ def search_people(request):
         return render(request, "RemiScene/search_people.html", {'user': request.user})
 
     if leng == 2:
-        users_group = User.objects.filter(first_name__contains=names[0], last_name__contains=names[1])
+        users_group = User.objects.filter(first_name__contains=names[0], last_name__contains=names[1]).exclude(id=request.user.id)
         context = {'result_users': users_group, 'user': request.user}
         return render(request, "RemiScene/search_people.html", context)
 
     result_list = set()
-    users_group1 = User.objects.filter(first_name__contains=name)
-    users_group2 = User.objects.filter(last_name__contains=name)
+    users_group1 = User.objects.filter(first_name__contains=name).exclude(id=request.user.id)
+    users_group2 = User.objects.filter(last_name__contains=name).exclude(id=request.user.id)
     
     for user in users_group1:
         result_list.add(user)
