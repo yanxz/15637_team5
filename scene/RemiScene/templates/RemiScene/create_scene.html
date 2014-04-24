@@ -63,6 +63,23 @@
 		}
 	}
 
+	function input() {
+		var div1 = document.getElementById("result");
+		var div2 = div1.getElementsByTagName("p");
+		if (div2.length > 0) {
+			var input = document.getElementById("hidden_input");
+			var child_list = div2;
+			var string = "";
+			for (var i = 0; i < child_list.length; i++) {
+				var child = child_list[i];
+				string += child.id+",";
+			}
+			input.value=string;
+			console.log(string);
+		}
+		return true;
+	}
+
 
 
 </script>
@@ -119,7 +136,7 @@
 <div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
 	<div class="well well-sm">
 		<div style="padding-right:80px">
-		<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="form-group">
+		<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="form-group" onclick="return input()">
 			<h2 style="text-align:center; padding-left:100px;">Create Scene</h2>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Title</label>
@@ -160,6 +177,7 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Friends in the site</label>
+				<input id = "hidden_input" type="text" hidden="true" name="friends">
 				<!--
 				<div class="col-md-9">
 					<input type="text" name="friends" class="form-control" placeholder="John Lennon, Jeff Eppinger"/>
@@ -183,7 +201,7 @@
 </div>
 
 <div id = "hidden" hidden="true">
-	<div id = "result" >
+	<div id = "result"  calss="result">
 	</div>
 
 

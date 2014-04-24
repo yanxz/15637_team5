@@ -83,9 +83,15 @@ def add_scene(request):
     friends = request.POST['friends']
 
     if len(friends) > 0:
+        print(friends)
         friends_list = re.compile(r',').split(friends)
 
-        for friend_name in friends_list:
+        for friend_id in friends_list:
+            if len(friend_id) > 0:
+                friend = User.objects.get(id=friend_id)
+                new_person_scene = PersonScene(user=friend,scene=new_Scene)
+                new_person_scene.save()
+            '''
             friend_name = friend_name.strip();
             names= re.compile(r' ').split(friend_name, 2)
             user = User.objects.filter(first_name=names[0], last_name=names[1])
@@ -95,6 +101,7 @@ def add_scene(request):
             if len(Friends.objects.filter(user=request.user,friend_id=user[0].id)) > 0:
                 new_person_scene = PersonScene(user=user[0], scene=new_Scene)
                 new_person_scene.save()
+            '''
 
     new_person_scene = PersonScene(user=request.user, scene=new_Scene)
     new_person_scene.save()
