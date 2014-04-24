@@ -1,0 +1,51 @@
+#hidden {
+	background:url(images/bg.jpg);
+	overflow: hidden;
+}
+
+#hidden #result {
+	overflow:auto;
+	position: relative;
+	top: 0px;
+	height: 200px;
+}
+
+#result p{
+	margin-top: 40px;
+	margin-left: 15px;
+}
+
+#hidden .container {
+	position: relative;
+	overflow:scroll;
+	/*margin-top: 100px;*/
+	width: 800px;
+	height: 600px;
+	bottom: 0px;
+	float: bottom;
+}
+
+#hidden .container p {
+	font-size: 30px;
+}
+
+.name {
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin:auto;
+}
+
+.button {
+  display: block;
+  width: 115px;
+  height: 40px;
+  background: #428bca;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
