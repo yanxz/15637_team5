@@ -204,7 +204,7 @@ def confirm_message(request,id):
     new_message.save()
     new_friendship = Friends(user=to_user,friend_id=from_user.id,is_active=True)
     new_friendship.save()
-    friendship = Friends.objects.get(user=from_user,id=to_user.id)
+    friendship = Friends.objects.get(user=from_user,friend_id=to_user.id)
     friendship.is_active = True
     friendship.save()
     return redirect(reverse('message'))
