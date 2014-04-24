@@ -86,13 +86,16 @@
                 });
                 var contentString = '<div><p>{{ scene.title }}</p>' + /*'<p>{{ scene.description }}</p>' +*/ "<a href = \"" + "{% url 'scene_home' scene.id %}" +"\">" + 'Go to scene</a></div>';
                 addInfoWindow(marker, contentString);
-
+                console.log("Here is it!")
                 markers.push(marker);
+                console.log("Really?!")
               }
+
           });
         {% endfor %}
-        var markerCluster = new MarkerClusterer(map, markers);
-
+        console.log("Before new MarkerCluster")
+          setTimeout(function(){var markerCluster = new MarkerClusterer(map, markers);},800);
+        console.log("After new MarkerCluster")
       }
     </script>
 </head>
