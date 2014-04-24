@@ -63,7 +63,10 @@ def manage_scene_create(request):
     context = {'form':SceneForm()}
     friend_list = []
     friendships = Friends.objects.filter(user=request.user)
-    
+    for friendship in friendships:
+        if friendship.is_active:
+            friend_list.append(User.objects.get(id=friendship.friend_id))
+    context['friends']=friend_list
     return render(request, 'RemiScene/create_scene.html', context)
 
 @login_required
