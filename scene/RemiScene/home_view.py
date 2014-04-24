@@ -230,8 +230,14 @@ def confirm_message(request,id):
     content = to_user.first_name + " "+to_user.last_name + " has added you as a friend."
     new_message = Message(to_user=from_user,from_user=to_user,content=content,create_time=datetime.now(),is_viewed=True)
     new_message.save()
+
+    if len(Message.objects.filter(to_user=from_user,from_user=to_user,is_viewed=False)) > 0:
+        m = Message.objects.get(to_user=from_user,from_user=to_user,is_viewed=False)
+        m.is_viewed = True
+        m.save()
+
     if len(Friends.objects.filter(user=to_user,friend_id=from_user.id)) > 0:
-        friendship = Friends.objects.filter(user=to_user,friend_id=from_user.id)
+        friendship = Friends.objects.get(user=to_user,friend_id=from_user.id)
         friendship.is_active = True
         friendship.save()
     else:
