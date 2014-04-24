@@ -34,12 +34,14 @@ from itertools import chain
 
 import re
 
+@login_required
 def home(request):
     users = [request.user]
     friends = Friends.get_friends(request.user)
     if len(friends) > 0:
-        for user in friends[0].friends.all():
-            users.append(user)
+        for friend in friends:
+            if friend.is_active:
+                users.append(User.objects.get(id=friend.friend_id))
 
     scene_set = []
     for user in users:
@@ -50,6 +52,7 @@ def home(request):
     return render(request, 'RemiScene/map.html', {'scenes' : scene_set})
 
 # register page.
+@login_required
 def plain_search(request):
     context = {}
 
