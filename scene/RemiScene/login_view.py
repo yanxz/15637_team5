@@ -130,7 +130,7 @@ def edit_person_scene(request,id):
 			newPhoto.save()
 	scene_id = int(person_scene.scene.id)
 
-	return redirect(reverse('home'))
+	return redirect(reverse('RemiScene.scene_view.home',args=(scene_id,)))
 
 #type: 0,profile  1,scene  2,personScene
 def get_photo(request,username,id,type):
