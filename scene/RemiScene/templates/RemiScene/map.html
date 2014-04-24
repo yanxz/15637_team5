@@ -33,13 +33,9 @@
       google.maps.event.addDomListener(window, 'load', function(){ getLocation(); });
 
       function addInfoWindow(marker, content) {
-        var infowindow = new google.maps.InfoWindow({
-            content: content,
-            maxWidth: 200
-          });
-
         google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map, marker);
+            infowindow.setContent(content);
+            infowindow.open(map, this);
           });
       }
 
@@ -77,6 +73,12 @@
             mapOptions);
 
         geocoder = new google.maps.Geocoder();
+
+        infowindow = new google.maps.InfoWindow({
+          content: "",
+          maxWidth: 200
+        });
+
         var markers = [];
         {% for scene, date in time.items %}
           geocoder.geocode( {'address': "{{scene.loc}}"}, function(results, status) {
