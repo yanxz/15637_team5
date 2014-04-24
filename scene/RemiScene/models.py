@@ -23,7 +23,7 @@ class Scene(models.Model):
     description = models.TextField(blank=True)
     occur_time = models.DateTimeField()
     create_time = models.DateTimeField(auto_now_add=True)
-    image_loc = models.ImageField(upload_to='image', blank=True)
+    image_loc = models.ImageField(upload_to='image', blank=True, default='image/apple.jpg')
     date = 'date'
     party= 'party'
     study = 'study'
@@ -34,7 +34,7 @@ class Scene(models.Model):
         (study,'study'),
         (hangout,'hangout'),
             )
-    tag = models.CharField(max_length=5, choices=TAG, default=party)
+    tag = models.CharField(max_length=8, choices=TAG, default=party)
     loc = models.CharField(max_length=240,blank=True)
 
     def __unicode__(self):
