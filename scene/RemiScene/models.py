@@ -28,12 +28,13 @@ class Scene(models.Model):
     WORK = 'work'
     OTHER = 'other'
     TAG = (
-        (LIFE, 'happy'),
-        (WORK, 'date'),
-        (OTHER, 'party'),
+        (date, 'date'),
+        (party, 'party'),
+        (study,'study'),
+        (hangout,'hangout'),
             )
     tag = models.CharField(max_length=5, choices=TAG, default=OTHER)
-    loc = models.CharField(max_length=240)
+    loc = models.CharField(max_length=240,blank=True)
 
     def __unicode__(self):
         return self.title
