@@ -21,16 +21,6 @@
         margin:auto;
         padding-bottom: 20px;
       }
-      #panel {
-        position: absolute;
-        top: 260px;
-        left: 55%;
-        margin-left: -180px;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-      }
     </style>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZSWHRKqyMc9_0-NZuHCNVHxyvQGHTOhk&sensor=true">
@@ -96,13 +86,16 @@
                 });
                 var contentString = '<div><p>{{ scene.title }}</p>' + /*'<p>{{ scene.description }}</p>' +*/ "<a href = \"" + "{% url 'scene_home' scene.id %}" +"\">" + 'Go to scene</a></div>';
                 addInfoWindow(marker, contentString);
-
+                console.log("Here is it!")
                 markers.push(marker);
+                console.log("Really?!")
               }
+
           });
         {% endfor %}
-        var markerCluster = new MarkerClusterer(map, markers);
-
+        console.log("Before new MarkerCluster")
+          setTimeout(function(){var markerCluster = new MarkerClusterer(map, markers);},800);
+        console.log("After new MarkerCluster")
       }
     </script>
 </head>
@@ -150,14 +143,14 @@
     <div class="text-center" style="margin-top:-10px; padding-bottom:10px">
       <h2>Scenes Around You:</h2>
     </div>
-    <div id="panel">
-      <input id="address" type="textbox" value="Pittsburgh, PA">
-      <input type="button" value="Go!" onclick="codeAddress()">
+    <div style="position: relative;">
+      <div id="panel" style="position: absolute; top: 20px; left: 40%; background-color: #fff; padding: 5px; border: 1px solid #999; z-index:5;">
+        <input id="address" type="textbox" value="Pittsburgh, PA">
+        <input type="button" value="Go!" onclick="codeAddress()">
+      </div>
+      <div id="map-canvas" /></div>
     </div>
-    <div id="map-canvas" /></div>
     </div >
-
-    
 </body>
 
 </html>
