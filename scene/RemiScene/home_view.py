@@ -44,8 +44,8 @@ def home(request):
     person_scenes = PersonScene.get_personScenes_from_user(user)
     for s in person_scenes:
         scene_set.append(s.scene)
-    scene_set = sorted(scene_set, key = lambda x : x.occur_time, reverse=True)
-    
+    scene_set = sorted(scene_set, key = lambda x : x.create_time, reverse=True)
+
     friends = []
     for friend in friendships:
         if friend.is_active == False:
@@ -261,5 +261,5 @@ def all_scenes(request):
         for ps in person_scenes:
             scene_set.append(ps.scene)
 
-    scene_set = sorted(scene_set, key = lambda x : x.occur_time, reverse=True)
+    scene_set = sorted(scene_set, key = lambda x : x.create_time, reverse=True)
     return render(request, 'RemiScene/all_scenes.html', {'scenes' : scene_set})
