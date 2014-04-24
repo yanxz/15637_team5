@@ -24,16 +24,17 @@ class Scene(models.Model):
     occur_time = models.DateTimeField()
     create_time = models.DateTimeField(auto_now_add=True)
     image_loc = models.ImageField(upload_to='image', blank=True)
-    LIFE = 'life'
-    WORK = 'work'
-    OTHER = 'other'
+    date = 'date'
+    party= 'party'
+    study = 'study'
+    hangout='hangout'
     TAG = (
-        (date, 'date'),
-        (party, 'party'),
+        (date,'date'),
+        (party,'party'),
         (study,'study'),
         (hangout,'hangout'),
             )
-    tag = models.CharField(max_length=5, choices=TAG, default=OTHER)
+    tag = models.CharField(max_length=5, choices=TAG, default=party)
     loc = models.CharField(max_length=240,blank=True)
 
     def __unicode__(self):
