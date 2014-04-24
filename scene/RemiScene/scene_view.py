@@ -21,7 +21,7 @@ from mimetypes import guess_type
 import string
 import random
 
-#@login_required
+@login_required
 def home(request, scene_id):
 	scene = Scene.objects.get(id = scene_id)
 	person_scenes = PersonScene.objects.filter(scene = scene)
@@ -40,7 +40,7 @@ def home(request, scene_id):
 	context['scene'] = scene
 	return render(request, "RemiScene/scene.html", context)
 
-#@login_required
+@login_required
 def click_on_person(request, person_scene_id):
 	person_scene = PersonScene.objects.get(id = person_scene_id)
 	context = {'person_scene' : person_scene}
