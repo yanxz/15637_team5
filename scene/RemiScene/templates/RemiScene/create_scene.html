@@ -1,5 +1,68 @@
 {% extends "home_base.html" %}
 
+{% block header %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "create.css" %}">
+<script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
+<script type="text/javascript">
+	/*
+	$(document).ready(function(){
+		var list = document.getElementById("hidden");
+		var number = {{friends|length}};
+		var rows = Math.round(number/4);
+		var count = 0;
+	
+		for (var row = 0; row < rows; row++) {
+			var rowE = document.createElement("div");
+			rowE.class = "row";
+			for (var col = 0; col < 4; col++) {
+				if (count == number) {
+					return;
+				}
+				var colE = document
+			}
+		}
+		
+	});
+*/
+
+
+	function func(aa){
+		var i = $.layer({
+			type : 1,
+			title : false,
+			fix : false,
+			offset:['50%','50%'],
+			area : ['1000px','800px'],
+			closeBtn : [0,false],
+			page : {dom : '#'+aa},
+			shade : [0.5 , '#000' , true],
+			shadeClose : true
+		});
+	}
+
+	function addFriend(first,last,id) {
+		var div = document.getElementById("result");
+		var length = {{friends|length}};
+		console.log(length);
+		var is_active = $('#result '+'#'+id);
+		console.log(is_active.length+"length");
+		if (is_active.length == 0) {
+			var para = document.createElement("button");
+			para.id = id;
+			para.class = "btn btn-primary btn-lg";
+			console.log("rcy");
+			para.innerHTML = first+" "+last;
+			div.appendChild(para);
+			console.log("1");
+		} else {
+
+		}
+	}
+
+
+</script>
+{% endblock %}
 
 {% block content %}
 <style type="text/css">
@@ -93,9 +156,12 @@
 			
 			<div class="form-group">
 				<label class="col-md-3 control-label">Friends in the site</label>
+				<!--
 				<div class="col-md-9">
 					<input type="text" name="friends" class="form-control" placeholder="John Lennon, Jeff Eppinger"/>
 				</div>
+				-->
+				<div onclick="func('hidden')" class="btn btn-primary"> add friends </div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Image</label>
@@ -111,5 +177,26 @@
 		</div>
 	</div>
 </div>
+
+<div id = "hidden" hidden="true">
+	<div id = "result" >
+	</div>
+
+
+	<div class='container'>
+	{% for friend in friends %}
+		<div id = "{{friend.id}}" class="row">
+			<img src="{% url 'get_photo' friend.username 0 0 %}" class="col-md-3" width="200" height="200">
+			<div class="col-md-3">
+				<p> {{friend.first_name}} {{friend.last_name}}</p>
+			</div >
+			<button onclick="addFriend('{{friend.first_name}}','{{friend.last_name}}',{{friend.id}})" class="col-md-3 btn btn-lg btn-primary">add this friend</button>
+		</div>
+	{% endfor %}
+	</div>
+
+</div>
+
+
 
 {% endblock %}

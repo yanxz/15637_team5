@@ -66,6 +66,7 @@ def manage_scene_create(request):
     for friendship in friendships:
         if friendship.is_active:
             friend_list.append(User.objects.get(id=friendship.friend_id))
+    print(len(friend_list))
     context['friends']=friend_list
     return render(request, 'RemiScene/create_scene.html', context)
 
