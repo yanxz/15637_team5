@@ -1,39 +1,84 @@
-{% extends "base.html" %} {% block content %}
-<div class="container" style="margin-left: auto; margin-right: auto;">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-    <form action="{% url 'login' %}" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <!--
-        <input type="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
-        -->
-        <p style="color:red">{{error}}</p>
+<head>
+    {% load static %}
+    <title>RemiScene</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="../static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../static/js/script.js"></script>
+    <script type="text/javascript" src="../static/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="../static/js/arial.js"></script>
+    <script type="text/javascript" src="../static/js/cuf_run.js"></script>
+    {% block header %} {% endblock %}
+</head>
 
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-                <td><span style="color:red">{{ form.username.errors }}</span>
-                </td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-                <td><span style="color:red">{{ form.password.errors }}</span>
-                </td>
-            </tr>
-        </table>
-        <!--
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        -->
+<body>
+    <div class="main">
+        <div class="main_resize">
+            <!-- header -->
+            <div class="header">
+                <div class="logo">
+                    <h1><span>Remi</span>Scene<small></small></h1>
+                </div>
+                <div id="cover">
+                    <div id="cover_image">
+                        {% block cover_image %}
+                        <img src="{% static 'images/header_images.jpg' %}" width="923" height="645" alt="" /> 
+                        {% endblock %}
+                    </div>
+                    {% block head_portrait%}
+                    {% endblock %}
+                </div>
+            </div>
+            <div id="login" style="margin-left: auto; margin-right: auto;">
 
-        <button class="btn btn-primary " type="submit" >Sign in</button>
-        <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
-        {% csrf_token %}
-    </form>
+                <form action="{% url 'login' %}" method="post">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <!--
+                    <input type="email" class="form-control" placeholder="Email address" required autofocus>
+                    <input type="password" class="form-control" placeholder="Password" required>
+                    -->
+                    <p style="color:red">{{error}}</p>
 
-</div>
-<!-- /container -->
-{% endblock %}
+
+                    <table>
+                        <tr style="height:40px">
+                            <td style="width:100px">{{ form.username.label_tag }}</td>
+                            <td>{{ form.username }}</td>
+                            <td><span style="color:red">{{ form.username.errors }}</span>
+                            </td>
+                        </tr>
+                        <tr style="height:40px">
+                            <td>{{ form.password.label_tag }}</td>
+                            <td>{{ form.password }}</td>
+                            <td><span style="color:red">{{ form.password.errors }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"> <a class="btn btn-lg btn-primary btn-block" href="{% url 'register' %}" class="btn btn-primary">Register</a></tr>
+                    </table> 
+
+
+                    <!--
+                    <label class="checkbox">
+                      <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                    -->
+
+                    
+                    {% csrf_token %}
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
