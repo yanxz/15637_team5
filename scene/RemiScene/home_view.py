@@ -61,6 +61,9 @@ def home(request):
 @login_required
 def manage_scene_create(request):
     context = {'form':SceneForm()}
+    friend_list = []
+    friendships = Friends.objects.filter(user=request.user)
+    
     return render(request, 'RemiScene/create_scene.html', context)
 
 @login_required
@@ -131,7 +134,8 @@ def search_people(request):
 @login_required
 def add_friend(request,userid):
     user = request.user
-    if len(Friends.objects.filter(user=user,friend_id=userid)) == 0: 
+    friendships = Friends.objects.filter(user=user,friend_id=userid)
+    if len(friendships) == 0: 
         friendship = Friends(user=request.user,friend_id=userid)
         friendship.save()
 
@@ -142,7 +146,11 @@ def add_friend(request,userid):
         new_Message.save()
         add_friend_result = 'You have send a message to '+ friend.first_name + " " + friend.last_name
     else:
-        add_friend_result = friend.first_name + " " + friend.last_name + 'is already your friend.'
+        friend = User.objects.get(id=userid)
+        if friendships[0].is_active:
+            add_friend_result = friend.first_name + " " + friend.last_name + ' is already your friend.'
+        else:
+            add_friend_result = friend.first_name + " " + friend.last_name + ' has not comfirm the request.'
 
     context = {'add_friend_result': add_friend_result}
     return render(request, "RemiScene/search_people.html", context)
