@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^get_music/(?P<username>[^/]*)/(?P<id>\d+)/(?P<type>\d)','RemiScene.login_view.get_music',name='get_music'),
 
     url(r'^map$', 'RemiScene.map_view.home', name='map_home'),
+    url(r'^map/select$','RemiScene.map_view.select_tag',name='select_tag'),
 
     url(r'^friends_scene/(?P<userid>\d+)$', 'RemiScene.friend_view.home', name='friend_home'),
     url(r'^search_friend$', 'RemiScene.friend_view.search_friend', name='search_friend'),
