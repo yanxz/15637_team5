@@ -12,6 +12,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import *
 
 from form import RegistrationForm
+import datetime
 # Used to reverse url
 from django.core.urlresolvers import reverse
 # Used to send mail from within Django
@@ -267,3 +268,23 @@ def edit_profile(request):
 	form.save()
 	profile.save()
 	return redirect(reverse('home'))
+
+@login_required
+def delete_message(request,id):
+	message = Message.objects.get(id=id)
+	if message.is_viewed:
+		message.delete()
+	else:
+		from_user = message.from_user
+		to_user = message.to_user
+		if len(Friends.objects.filter(user=to_user,friend_id=from_user.id)) > 0:
+			friendship = Friends.objects.get(user=to_user,friend_id=from_user.id)
+			friendship.delete()
+		if len(Friends.objects.filter(user=from_user,friend_id=to_user.id)) > 0:
+			friendship = Friends.objects.get(user=from_user,friend_id=to_user.id)
+			friendship.delete()
+		content = to_user.first_name+" "+to_user.last_name+" declined your request."
+		new_message = Message(from_user=to_user,to_user=from_user,is_viewed=True,content=content,create_time=datetime.now())
+		new_message.save()
+		message.delete()
+	return redirect(reverse('message'))

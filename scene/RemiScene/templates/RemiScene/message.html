@@ -11,8 +11,9 @@
 				<div class="blog-post" style="padding-top:60px">
 					{{ message.content }}
 					<span class="pull-right">
+						<a href = "{% url 'delete_message' message.id %}" class="btn btn-lg btn-primary" style="background-color:#FF0000;">Delete</a>
 						{% if message.is_viewed == False %}
-							<a class="button" href = "{% url 'confirm_message' message.id %}" type="button" class="btn btn-lg btn-primary">Accept</a>
+							<a href = "{% url 'confirm_message' message.id %}" class="btn btn-lg btn-primary">Accept</a>
 						{% endif %}
 					</span>
 				</div>

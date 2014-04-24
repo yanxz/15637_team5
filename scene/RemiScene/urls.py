@@ -30,5 +30,6 @@ urlpatterns = patterns('',
     url(r'^edit_profile$','RemiScene.login_view.edit_profile',name='edit_profile'),
 
     url(r'^get_photo_person/(?P<id>\d+)/(?P<index>\d+)/(?P<type>\d)$','RemiScene.login_view.get_person_scene_photo',name='get_photo_person'),
-    url(r'^confirm_message/(?P<id>\d+$)','RemiScene.home_view.confirm_message',name='confirm_message'),
+    url(r'^confirm_message/(?P<id>\d+)$','RemiScene.home_view.confirm_message',name='confirm_message'),
+    url(r'^delete_message/(?P<id>\d+)$','RemiScene.login_view.delete_message',name='delete_message'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
