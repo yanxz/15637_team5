@@ -76,23 +76,24 @@
 		console.log("rcy");
 		var list = $("p.essay").toArray();
 		for (var i = 0; i < list.length; i++) {
+			console.log("rcyrcy");
 			var str = list[i].innerHTML.trim().substr(0,80);
+			console.log(str);
 			list[i].innerHTML = str;
 		}
 		//var tag = "{{scene.tag}}";
 		console.log("rcy");
 		//console.log({{scene.tag}});
-		if ("{{scene.tag}}"=="other") {
-			console.log("enter other1");
+		if ("{{scene.tag}}"=="party") {
 			$(".person_scene_block").css("background-image","url(../../static/images/bgparty.png)");
 			//rcy.className = "person_scene_block sddate";
 			//rcy.style = "background-image: url(../../static/images/bgparty.png);";
+		} else if ("{{scene.tag}}"=="date") {
+			$(".person_scene_block").css("background-image","url(../../static/images/bgflower.jpg)");
+		} else if ("{{scene.tag}}"=="study") {
+			$(".person_scene_block").css("background-image","url(../../static/images/bgstudy.png)");
 		} else {
-			console.log("enter other");
-			document.getElementsByClassName("person_scene_block")[0].style="background-image:url(../../static/images/bgparty.png)";
-			//var rcy = document.getElementsByClassName("person_scene_block")[0];
-			//rcy.className = "person_scene_block sddate";
-			//rcy.style = "background-image: url(../../static/images/bgparty.png);";
+			$(".person_scene_block").css("background-image","url(../../static/images/bghangout.jpg)");
 		}
 
 	});
@@ -177,9 +178,9 @@
 
 			<div class="mainbar" >
 				<div class="rightoval-thought" onclick="func({{person_scene.id}})" style="height:180px">
-						<div class="essay">
+						<p class="essay">
 				    	{{person_scene.essay}}
-				    	</div>
+				    	</p>
 				</div>
 				
 			</div>
