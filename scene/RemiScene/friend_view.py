@@ -37,14 +37,25 @@ import re
 @login_required
 def home(request, userid):
 	try:
-		friend = Friends.objects.get(user=request.user,frined_id=userid)
+		friendships = Friends.objects.filter(user=request.user)
+		print(1)
 		friend = User.objects.get(id=userid)
 		profile = friend.get_profile()
 		scene_set = []
 		person_scenes = PersonScene.get_personScenes_from_user(friend)
+		print(2)
 		for s in person_scenes:
 			scene_set.append(s.scene)
-		context = {'user':user,
+		print(3)
+		friends = []
+		print(len(friendships))
+		
+		for friendship in friendships:
+			if friendship.is_active:
+				print(4)
+				friends.append(User.objects.get(id=friendship.friend_id))
+		
+		context = {'user':friend,
 			'logged_user':request.user,
 			'profile':profile,
 			'scenes':scene_set,
@@ -102,7 +113,7 @@ def search_friend(request):
 
 	result_list = []
 	friends = Friends.get_friends(user)
-	id_list = Friends.get_friends(user).values_list('frined_id')
+	id_list = Friends.get_friends(user).values_list('friend_id')
 	for user in temp_list:
 		if user.id in id_list:
 			if friends.get(friend_id=user.id).is_active == False:
