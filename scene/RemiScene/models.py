@@ -42,7 +42,7 @@ class PersonScene(models.Model):
     essay = models.TextField(blank=True)
     video_loc = models.FileField(upload_to='video',blank=True)
     music_loc = models.FileField(upload_to='music',blank=True)
-    #photo_loc = models.ImageField(upload_to=get_photo_path,blank=True)
+    photo_num = models.IntegerField(default=0)
     scene = models.ForeignKey(Scene,null=True, blank=True, default = None)
     user = models.ForeignKey(User,null=True, blank=True, default = None)
 

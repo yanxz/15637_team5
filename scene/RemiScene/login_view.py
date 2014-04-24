@@ -122,7 +122,8 @@ def edit_person_scene(request,id):
 	person_scene.save()
 	if 'photo' in request.FILES:
 		photos = request.FILES.getlist('photo')
-		print(len(photos))
+		person_scene.photo_num = person_scene.photo_num+len(photos)
+		person_scene.save()
 		for photo in photos:
 			print(photo)
 			newPhoto = PersonScene_photo(person_scene=person_scene,photo=photo)
@@ -135,6 +136,8 @@ def get_photo(request,username,id,type):
 	try:
 		#
 		type = int(type)
+
+		#profile id photo
 		if type == 0:
 			user = User.objects.get(username=username)
 			profile = user.get_profile()
@@ -145,7 +148,7 @@ def get_photo(request,username,id,type):
 				'''
 			content_type = guess_type(profile.id_photo.name)
 			return HttpResponse(profile.id_photo,mimetype=content_type)
-
+		# scene pic (background)
 		elif type == 1:
 			scene = Scene.objects.get(id=id)
 			print(scene.image_loc)
@@ -155,15 +158,15 @@ def get_photo(request,username,id,type):
 				#return HttpResponse('image/',mimetype=content_type)
 			content_type = guess_type(scene.image_loc.name)
 			return HttpResponse(scene.image_loc,mimetype=content_type)
-
+		# person scene photo
 		elif type == 2:
 			personScene = PersonScene.objects.get(id=id)
-			print(personScene.photo_loc)
-			if not personScene.photo_loc:
-				return HttpResponse("")
+			photos = PersonScene_photo.objects.filter(person_scene=personScene).order_by("id")
+			
 			content_type = guess_type(personScene.photo_loc.name)
 			return HttpResponse(personScene.photo_loc,content_type=content_type)
 
+		# profile backgournd photo 
 		elif type == 3:
 			user = User.objects.get(username=username)
 			profile = user.get_profile()
@@ -173,6 +176,54 @@ def get_photo(request,username,id,type):
 
 	except:
 		return HttpResponse("error-1")
+
+#type: 2 left, 1 right, 0 current
+def get_person_scene_photo(request,id,index,type):
+	try:
+		index = int(index)
+		id = int(id)
+		type = int(type)
+		personScene = PersonScene.objects.get(id=id)
+		print(1)
+		photos = PersonScene_photo.objects.filter(person_scene=personScene)
+		print(2)
+		print(len(photos))
+		if len(photos) == 0 or index < 0 or index >= len(photos):
+			return HttpResponse("")
+
+		print(3)
+		'''
+		if index == 0:
+			print(3)
+			photo = photos[0]
+			if photo == None:
+				print('rcy')
+			print(4)
+		'''
+		if type == 0:
+			print("type = 0")
+			photo = photos[index]
+		elif type == 1:
+			print("type = 1")
+			if index == len(photos)-1:
+				index = 0
+			else:
+				index = index + 1
+			photo = photos[index]
+		elif type == 2:
+			print("type = 2")
+			if index == 0:
+				index = len(photos)-1
+			else:
+				index = index-1
+			photo = photos[index]
+		print(5)
+		print(photo.photo)
+		content_type = guess_type(photo.photo.name)
+		print(6)
+		return HttpResponse(photo.photo,content_type=content_type)
+	except:
+		return HttpResponse("error")
 
 def get_music(request,username,id,type):
 	try:

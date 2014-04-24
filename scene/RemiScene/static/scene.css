@@ -82,11 +82,46 @@
 
 .person_window .leftupbar img{
     max-width: 100%;
+    max-height: 100%;
     height: auto;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
 
+}
+
+.person_window button {
+    background-color: transparent;
+    border-color:transparent;
+    border-style:none;
+    font-size: 20px;
+}
+
+.person_window .leftupbar .right{
+    position: absolute;
+    right:0;
+    height: 700px;
+    width: 100px;
+    margin: 0px;
+    z-index: 500;
+    opacity:0.0;
+}
+.person_window .leftupbar .right:hover {
+    opacity:1.0;
+}
+
+.person_window .leftupbar .left{
+    position: absolute;
+    left:0;
+    height: 700px;
+    width: 100px;
+    margin: 0px;
+    z-index: 500;
+    opacity:0.0;
+}
+
+.person_window .leftupbar .left:hover {
+    opacity:1.0;
 }
 
 
