@@ -10,4 +10,5 @@
         <img src="{% url 'get_photo' user.username 1 0 %}" width="177" onload="cutPhotoImg(this,177);" height="177" />
     </a>
 </div>
+<span class="mavatar">Welcome, {{ user.first_name }} {{ user.last_name }}</span>
 {% endblock %}
