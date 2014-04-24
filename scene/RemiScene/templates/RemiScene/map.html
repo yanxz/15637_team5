@@ -29,6 +29,7 @@
     <script type="text/javascript">
       var geocoder;
       var map;
+      var infowindow;
       google.maps.event.addDomListener(window, 'load', function(){ getLocation(); });
 
       function addInfoWindow(marker, content) {
@@ -77,25 +78,26 @@
 
         geocoder = new google.maps.Geocoder();
         var markers = [];
-        {% for scene in scenes %}
+        {% for scene, date in time.items %}
           geocoder.geocode( {'address': "{{scene.loc}}"}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                 var marker = new google.maps.Marker({
                   map: map,
                   position: results[0].geometry.location
                 });
-                var contentString = '<div><p>{{ scene.title }}</p>' + /*'<p>{{ scene.description }}</p>' +*/ "<a href = \"" + "{% url 'scene_home' scene.id %}" +"\">" + 'Go to scene</a></div>';
+                var contentString = '<div><p>{{ scene.title }}</p>' + 
+                  '<p>{{ date }}</p>' +
+                  {% if scene.image_loc %}
+                  '<img class="img-thumbnail" "height="200"  width="200" ' + "src=\"{% url 'get_photo' 0 scene.id 1 %}\">" + 
+                  {% endif %}
+                  "<a href = \"" + "{% url 'scene_home' scene.id %}" +"\">" + 'Go to scene</a></div>';
                 addInfoWindow(marker, contentString);
-                console.log("Here is it!")
                 markers.push(marker);
-                console.log("Really?!")
               }
 
           });
         {% endfor %}
-        console.log("Before new MarkerCluster")
-          setTimeout(function(){var markerCluster = new MarkerClusterer(map, markers);},800);
-        console.log("After new MarkerCluster")
+        setTimeout(function(){var markerCluster = new MarkerClusterer(map, markers);},800);
       }
     </script>
 </head>

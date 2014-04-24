@@ -48,8 +48,11 @@ def home(request):
         person_scenes = PersonScene.get_personScenes_from_user(user)
         for s in person_scenes:
             scene_set.append(s.scene)
-
-    return render(request, 'RemiScene/map.html', {'scenes' : scene_set})
+    time_dict = {}
+    for scene in scene_set:
+        time = str(scene.occur_time)
+        time_dict[scene] = time[:10]
+    return render(request, 'RemiScene/map.html', {'time' : time_dict})
 
 # register page.
 @login_required
