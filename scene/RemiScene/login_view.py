@@ -128,6 +128,7 @@ def edit_person_scene(request,id):
 			print(photo)
 			newPhoto = PersonScene_photo(person_scene=person_scene,photo=photo)
 			newPhoto.save()
+	scene_id = int(person_scene.scene.id)
 
 	return redirect(reverse('home'))
 
