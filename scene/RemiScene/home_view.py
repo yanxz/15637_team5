@@ -92,7 +92,7 @@ def add_scene(request):
             if len(user) <= 0:
                 continue
 
-            if len(Friends.objects.filter(user=request.user,friend_id=user.id)) > 0:
+            if len(Friends.objects.filter(user=request.user,friend_id=user[0].id)) > 0:
                 new_person_scene = PersonScene(user=user[0], scene=new_Scene)
                 new_person_scene.save()
 
@@ -118,21 +118,40 @@ def search_people(request):
     if leng >= 3:
         return render(request, "RemiScene/search_people.html", {'user': request.user})
 
+    friends = Friends.get_friends(request.user)
+    friends_acked = friends.filter(is_active=True)
+    friends_id_list = friends.values_list('friend_id', flat=True)
+    friends_acked_id_list = friends_acked.values_list('friend_id', flat=True)
+    
+    friend_group = []
+    friend_acked_group = []
+
     if leng == 2:
-        users_group = User.objects.filter(first_name__contains=names[0], last_name__contains=names[1])
-        context = {'result_users': users_group, 'user': request.user}
+        users_group = User.objects.filter(first_name__contains=names[0], last_name__contains=names[1]).exclude(id=request.user.id)
+        
+        for user in users_group:
+            if user.id in friends_acked_id_list:
+                friend_acked_group.append(user)
+            elif user.id in friends_id_list:
+                friend_group.append(user)
+        context = {'result_users': users_group, 'friend_group':friend_group, 'friend_acked_group':friend_acked_group, 'user': request.user}
         return render(request, "RemiScene/search_people.html", context)
 
     result_list = set()
-    users_group1 = User.objects.filter(first_name__contains=name)
-    users_group2 = User.objects.filter(last_name__contains=name)
+    users_group1 = User.objects.filter(first_name__contains=name).exclude(id=request.user.id)
+    users_group2 = User.objects.filter(last_name__contains=name).exclude(id=request.user.id)
     
     for user in users_group1:
         result_list.add(user)
     for user in users_group2:
         result_list.add(user)
 
-    context = {'result_users': result_list, 'user': request.user}
+    for user in result_list:
+        if user.id in friends_acked_id_list:
+            friend_acked_group.append(user)
+        elif user.id in friends_id_list:
+            friend_group.append(user)
+    context = {'result_users': result_list, 'friend_group':friend_group, 'friend_acked_group':friend_acked_group, 'user': request.user}
     return render(request, "RemiScene/search_people.html", context)
 
 @login_required

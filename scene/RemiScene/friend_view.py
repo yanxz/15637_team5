@@ -106,19 +106,47 @@ def search_friend(request):
 		return render(request, "RemiScene/search_friends.html", {'result_users': friends, 'user': request.user})
 
 	name = request.POST["name"]
+	if len(name) == 0:
+		return render(request, "RemiScene/search_friends.html", {'user': request.user})
 
+	names = re.split('\W+', name)
+	leng = len(names)
+	if names[leng-1] == '':
+		leng -= 1
+
+	if leng >= 3:
+		return render(request, "RemiScene/search_friends.html", {'user': request.user})
+
+	friends = Friends.get_friends(user)
+	id_list = Friends.get_friends(user).values_list('friend_id', flat=True)
+	result_list = []
+
+	if leng == 2:
+		users_group = User.objects.filter(first_name__contains=names[0], last_name__contains=names[1]).exclude(id=request.user.id)
+		print users_group[0].id
+		print id_list
+		for user in users_group:
+			if user.id in id_list:
+				if friends.get(friend_id=user.id).is_active == False:
+					continue
+				result_list.append(user)
+		context = {'result_users': result_list, 'user': request.user}
+		return render(request, "RemiScene/search_friends.html", context)
+
+	result_list = set()
 	users_group1 = User.objects.filter(first_name__contains=name)
 	users_group2 = User.objects.filter(last_name__contains=name)
-	temp_list = list(chain(users_group1, users_group2))
-
-	result_list = []
-	friends = Friends.get_friends(user)
-	id_list = Friends.get_friends(user).values_list('friend_id')
-	for user in temp_list:
+	
+	for user in users_group1:
 		if user.id in id_list:
 			if friends.get(friend_id=user.id).is_active == False:
 				continue
-			result_list.append(user)
+			result_list.add(user)
+	for user in users_group2:
+		if user.id in id_list:
+			if friends.get(friend_id=user.id).is_active == False:
+				continue
+			result_list.add(user)
 
 	context = {'result_users': result_list, 'user': request.user}
 	return render(request, "RemiScene/search_friends.html", context)
