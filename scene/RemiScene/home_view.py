@@ -103,11 +103,28 @@ def search_people(request):
     if len(name) == 0:
         return render(request, "RemiScene/search_people.html", {'user': request.user})
 
-    result_set = []
+    names = re.split('\W+', name)
+    leng = len(names)
+    if names[leng-1] == '':
+        leng -= 1
+
+    if leng >= 3:
+        return render(request, "RemiScene/search_people.html", {'user': request.user})
+
+    if leng == 2:
+        users_group = User.objects.filter(firstname__contains=names[0], last_name__contains=names[1])
+        context = {'result_users': users_group, 'user': request.user}
+        return render(request, "RemiScene/search_people.html", context)
+
+    result_list = set()
     users_group1 = User.objects.filter(first_name__contains=name)
     users_group2 = User.objects.filter(last_name__contains=name)
-    result_list = list(chain(users_group1, users_group2))
-    print(result_list)
+    
+    for user in users_group1:
+        result_list.add(user)
+    for user in users_group2:
+        result_list.add(user)
+
     context = {'result_users': result_list, 'user': request.user}
     return render(request, "RemiScene/search_people.html", context)
 
