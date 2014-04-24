@@ -93,13 +93,13 @@ def confirm(request,email,token):
 	try:
 		user = User.objects.get(username=email)
 	except:
-		return render(request,'RemiScene/confirm_failded.html',{})
+		return render(request,'RemiScene/confirm_failed.html',{})
 	if token == user.get_profile().token:
 		user.is_active = True
 		user.save()
 		return render(request,'RemiScene/confirm_successed.html',{})
 	else:
-		return render(request,'RemiScene/confirm_failded.html',{})
+		return render(request,'RemiScene/confirm_failed.html',{})
 
 
 def test(request):
@@ -271,20 +271,23 @@ def edit_profile(request):
 
 @login_required
 def delete_message(request,id):
-	message = Message.objects.get(id=id)
-	if message.is_viewed:
-		message.delete()
-	else:
-		from_user = message.from_user
-		to_user = message.to_user
-		if len(Friends.objects.filter(user=to_user,friend_id=from_user.id)) > 0:
-			friendship = Friends.objects.get(user=to_user,friend_id=from_user.id)
-			friendship.delete()
-		if len(Friends.objects.filter(user=from_user,friend_id=to_user.id)) > 0:
-			friendship = Friends.objects.get(user=from_user,friend_id=to_user.id)
-			friendship.delete()
-		content = to_user.first_name+" "+to_user.last_name+" declined your request."
-		new_message = Message(from_user=to_user,to_user=from_user,is_viewed=True,content=content,create_time=datetime.now())
-		new_message.save()
-		message.delete()
-	return redirect(reverse('message'))
+	try:
+		message = Message.objects.get(id=id)
+		if message.is_viewed:
+			message.delete()
+		else:
+			from_user = message.from_user
+			to_user = message.to_user
+			if len(Friends.objects.filter(user=to_user,friend_id=from_user.id)) > 0:
+				friendship = Friends.objects.get(user=to_user,friend_id=from_user.id)
+				friendship.delete()
+			if len(Friends.objects.filter(user=from_user,friend_id=to_user.id)) > 0:
+				friendship = Friends.objects.get(user=from_user,friend_id=to_user.id)
+				friendship.delete()
+			content = to_user.first_name+" "+to_user.last_name+" declined your request."
+			new_message = Message(from_user=to_user,to_user=from_user,is_viewed=True,content=content,create_time=datetime.now())
+			new_message.save()
+			message.delete()
+		return redirect(reverse('message'))
+	except:
+		return redirect(reverse('message'))
