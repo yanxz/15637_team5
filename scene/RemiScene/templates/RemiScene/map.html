@@ -152,6 +152,32 @@
         <input id="address" type="textbox" value="Pittsburgh, PA">
         <input type="button" value="Go!" onclick="codeAddress()">
       </div>
+      <div class="panel panel-heading" style="position: absolute; top: 520px; left: 36%; background-color: #fff; padding: 5px; border: 1px solid #999; z-index:5;">
+        <form style="margin:5px 10px 0px 10px;" method="post" action="{% url 'select_tag' %}">
+          Filter Scenes:
+          {% if selected_tag and selected_tag == 'All' %}
+            <input checked type="radio" name="tag" value="All" onclick="this.form.submit();">All&nbsp;
+          {% else %}
+            <input type="radio" name="tag" value="All" onclick="this.form.submit();">All&nbsp;
+          {% endif %}
+          {% if selected_tag and selected_tag == 'Date' %}
+            <input checked type="radio" name="tag" value="Date" onclick="this.form.submit();">Date&nbsp;
+          {% else %}
+            <input type="radio" name="tag" value="Date" onclick="this.form.submit();">Date&nbsp;
+          {% endif %}
+          {% if selected_tag and selected_tag == 'Study' %}
+            <input checked type="radio" name="tag" value="Study" onclick="this.form.submit();">Study&nbsp;
+          {% else %}
+            <input type="radio" name="tag" value="Study" onclick="this.form.submit();">Study&nbsp;
+          {% endif %}
+          {% if selected_tag and selected_tag == 'Party' %}
+            <input checked type="radio" name="tag" value="Party" onclick="this.form.submit();">Party&nbsp;
+          {% else %}
+            <input type="radio" name="tag" value="Party" onclick="this.form.submit();">Party&nbsp;
+          {% endif %}
+          {% csrf_token %}
+        </form>
+      </div>
       <div id="map-canvas" /></div>
     </div>
     </div >

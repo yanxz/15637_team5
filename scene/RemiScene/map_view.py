@@ -54,6 +54,34 @@ def home(request):
         time_dict[scene] = time[:10]
     return render(request, 'RemiScene/map.html', {'time' : time_dict})
 
+@login_required
+def select_tag(request):
+    users = [request.user]
+    friends = Friends.get_friends(request.user)
+    if len(friends) > 0:
+        for friend in friends:
+            if friend.is_active:
+                users.append(User.objects.get(id=friend.friend_id))
+
+    scene_set = []
+    for user in users:
+        person_scenes = PersonScene.get_personScenes_from_user(user)
+        for s in person_scenes:
+            scene_set.append(s.scene)
+
+    tag = request.POST["tag"]
+    print tag
+
+    time_dict = {}
+    for scene in scene_set:
+        if tag != "All":
+            if scene.tag != str(tag):
+                print scene.tag
+                continue
+        time = str(scene.occur_time)
+        time_dict[scene] = time[:10]
+    return render(request, 'RemiScene/map.html', {'time' : time_dict, 'selected_tag' : tag})
+
 # register page.
 @login_required
 def plain_search(request):
