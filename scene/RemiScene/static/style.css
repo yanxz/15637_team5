@@ -65,7 +65,7 @@ a.rm, a.com {
 }
 .header, .content, .menu_nav, .fbg, .footer, form, ol, ol li, ul, .content .mainbar, .content .sidebar {
 	margin:0;
-	padding-bottom:50px;
+	padding-bottom:10px;
 }
 .main_resize {
 	margin:0 auto;
@@ -82,13 +82,12 @@ a.rm, a.com {
 .menu_nav {
 	margin:0 0 10px;
 	padding:0;
-	height: 150px;
+	height:150px;
 }
 .menu_nav ul {
 	list-style:none;
-	margin:0;
-	padding:0;
-	float:right;
+	margin-left:120px;
+	float:left;
 }
 .menu_nav ul li {
 	margin:0;
@@ -111,7 +110,7 @@ a.rm, a.com {
 	background:#78bbe6;
 }
 .content {
-	padding:10px 0px 100px 0px;
+	padding:50px 0px 100px 0px;
 	margin:0 auto;
 	width:923px;
 	height: auto;
@@ -325,10 +324,11 @@ ol li .send {
 .search {
 	float:right;
 	width:250px;
-	padding:25px 0;
+	height:86px;
+	padding:15px 0;
 }
 .search span {
-	width:235px;
+	width:220px;
 	display:block;
 	background:#FFF;
 	height:29px;
@@ -418,23 +418,27 @@ ol li .send {
 	display:block;
 }
 
+.cre-scene-button {
+	width:130px;
+
+}
+
 .scene_area {
 position: relative;
-top: 50px;
+margin-bottom: 300px;
 }
 
 .scene_container {
-padding-bottom: 50px;
+margin-top: 50px;
 height:350px;
 width:800px;
 position:relative;
-margin: auto;
+margin: 50px;
 box-shadow: 0 2px 10px 1px;
-background-color:
 }
 
 .scene_image {
-padding: 25px;
+  padding: 25px;
   position:absolute;
   left:0;
   right:0;
