@@ -37,7 +37,7 @@ import re
 @login_required
 def home(request):
     user = request.user
-    friends = Friends.get_friends(user)
+    friendships = Friends.get_friends(user)
     profile = user.get_profile()
     messages = Message.get_messages(user)
     scene_set = []
@@ -45,6 +45,11 @@ def home(request):
     for s in person_scenes:
         scene_set.append(s.scene)
     print scene_set
+    friends = []
+    for friend in friendships:
+        if friend.is_active == False:
+            continue
+        friends.append(User.objects.get(id=friend.friend_id))
     context = {'user':user,
             'profile':profile,
             'scenes':scene_set,
@@ -80,8 +85,9 @@ def add_scene(request):
             if len(user) <= 0:
                 continue
 
-            new_person_scene = PersonScene(user=user[0], scene=new_Scene)
-            new_person_scene.save()
+            if len(Friends.objects.filter(user=request.user,friend_id=user.id)) > 0:
+                new_person_scene = PersonScene(user=user[0], scene=new_Scene)
+                new_person_scene.save()
 
     new_person_scene = PersonScene(user=request.user, scene=new_Scene)
     new_person_scene.save()
@@ -102,6 +108,27 @@ def search_people(request):
     context = {'result_users': result_list, 'user': request.user}
     return render(request, "RemiScene/search_people.html", context)
 
+@login_required
+def add_friend(request,userid):
+    user = request.user
+    if len(Friends.objects.filter(user=user,friend_id=userid)) == 0: 
+        friendship = Friends(user=request.user,friend_id=userid)
+        friendship.save()
+
+        friend = User.objects.get(id=userid)
+        
+        content = user.first_name+" "+user.last_name+" wants to add you as a friend."
+        new_Message = Message(create_time=datetime.now(),content=content,from_user=user,to_user=friend)
+        new_Message.save()
+        add_friend_result = 'You have send a message to '+ friend.first_name + " " + friend.last_name
+    else:
+        add_friend_result = friend.first_name + " " + friend.last_name + 'is already your friend.'
+
+    context = {'add_friend_result': add_friend_result}
+    return render(request, "RemiScene/search_people.html", context)
+
+
+'''
 @login_required
 def add_friend(request, userid):
     friend = User.objects.get(id=userid)
@@ -125,7 +152,7 @@ def add_friend(request, userid):
     add_friend_result = 'You have successfully added '+ friend.first_name + " " + friend.last_name
     context = {'add_friend_result': add_friend_result}
     return render(request, "RemiScene/search_people.html", context)
-
+'''
 @login_required
 def message(request):
     messages = Message.get_messages(request.user)
@@ -133,12 +160,36 @@ def message(request):
     return render(request, "RemiScene/message.html", context)
 
 @login_required
+def confirm_message(request,id):
+    message = Message.objects.get(id=id)
+    if message.is_viewed:
+        return redirect(reverse('message'))
+    message.is_viewed = True
+    message.save()
+    to_user = message.to_user
+    from_user = message.from_user
+    content = to_user.first_name + " "+to_user.last_name + " has added you as a friend."
+    new_message = Message(to_user=from_user,from_user=to_user,content=content,create_time=datetime.now(),is_viewed=True)
+    new_message.save()
+    new_friendship = Friends(user=to_user,friend_id=from_user.id,is_active=True)
+    new_friendship.save()
+    friendship = Friends.objects.get(user=from_user,id=to_user.id)
+    friendship.is_active = True
+    friendship.save()
+    return redirect(reverse('message'))
+
+@login_required
 def all_scenes(request):
     users = [request.user]
     friends = Friends.get_friends(request.user)
     if len(friends) > 0:
+        '''
         for user in friends[0].friends.all():
             users.append(user)
+        '''
+        for friend in friends:
+            if friend.is_active:
+                users.append(User.objects.get(id=friend.friend_id))
             
     scene_set = []
     for user in users:

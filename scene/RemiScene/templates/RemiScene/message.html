@@ -4,8 +4,8 @@
 	{% for message in messages %}
 		<label>{{ message.from_user }}</label>
 		<p>{{ message.content }}</p>
-		{% if message.content == "I have added you as a SceneFriend." %}
-			<a class="btn" href = "{% url 'add_friend' message.from_user.id %}" type="button">Add SceneFriend</a>
+		{% if message.is_viewed == False %}
+			<a class="btn" href = "{% url 'confirm_message' message.id %}" type="button">Add SceneFriend</a>
 		{% endif %}
 	{% endfor %}
 {% endblock %}

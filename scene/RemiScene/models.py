@@ -69,9 +69,11 @@ class Privilege(models.Model):
     scene = models.ForeignKey(Scene)
     level = models.IntegerField()
 
+'''
 class Friends(models.Model):
     user = models.ForeignKey(User, related_name='user')
     friends = models.ManyToManyField(User, related_name='friends')
+    is_active = models.BooleanField(default=False)
    
     @staticmethod
     def get_friends(user):
@@ -82,18 +84,33 @@ class Friends(models.Model):
         for friend in self.friends.all():
             friend_names += friend.first_name + " " + friend.last_name + " "
         return self.user.first_name + " " + self.user.last_name + " -> " + friend_names
+'''
+class Friends(models.Model):
+    user = models.ForeignKey(User)
+    friend_id = models.IntegerField(null=True,blank=True)
+    is_active = models.BooleanField(default=False)
+
+    @staticmethod
+    def get_friends(user):
+        return Friends.objects.filter(user=user)
+
+    def __unicode__(self):
+        friend_user = User.objects.get(id=self.friend_id)
+        return friend_user.first_name +" "+ friend_user.last_name
 
 class Message(models.Model):
     create_time = models.DateTimeField()
     content = models.TextField()
     from_user = models.ForeignKey(User, related_name='fromWho')
     to_user = models.ForeignKey(User, related_name='toWho')
+    is_viewed = models.BooleanField(default=False)
     def __unicode__(self):
         return self.content
 
     @staticmethod
     def get_messages(user):
         return Message.objects.filter(to_user=user).order_by('-create_time')
+
 
 '''
 class Album(models.Model):
