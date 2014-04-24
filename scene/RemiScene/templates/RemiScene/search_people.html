@@ -6,7 +6,7 @@
   display: block;
   width: 115px;
   height: 40px;
-  background: #4E9CAF;
+  background: #428bca;
   padding: 10px;
   text-align: center;
   border-radius: 5px;
@@ -47,7 +47,13 @@
 						<div class="blog-post" style="padding-top:60px">
 							<span>{{ user.first_name }} {{ user.last_name }}</span>
 							<span class="pull-right">
-								<a class="button" href = "{% url 'add_friend' user.id %}" type="button" class="btn btn-lg btn-primary">add to friend</a>
+								{% if user in friend_acked_group %}
+									<label class="button" type="button" style="background:#5cb85c;" class="btn btn-lg btn-primary">SceneFriend</a>
+								{% elif user in friend_group %}
+									<label class="button" type="button" style="background:#5bc0de;" class="btn btn-lg btn-primary">Request sent</a>
+								{% else %}
+									<a class="button" href = "{% url 'add_friend' user.id %}" type="button" class="btn btn-lg btn-primary">add to friend</a>
+								{% endif %}
 							</span>
 						</div>
 						
