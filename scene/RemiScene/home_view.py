@@ -91,7 +91,7 @@ def add_scene(request):
             if len(user) <= 0:
                 continue
 
-            if len(Friends.objects.filter(user=request.user,friend_id=user.id)) > 0:
+            if len(Friends.objects.filter(user=request.user,friend_id=user[0].id)) > 0:
                 new_person_scene = PersonScene(user=user[0], scene=new_Scene)
                 new_person_scene.save()
 
@@ -117,8 +117,12 @@ def search_people(request):
     if leng >= 3:
         return render(request, "RemiScene/search_people.html", {'user': request.user})
 
+    friends = Friends.get_friends(user)
+    id_list = Friends.get_friends(user).values_list('friend_id', flat=True)
+    
     if leng == 2:
         users_group = User.objects.filter(first_name__contains=names[0], last_name__contains=names[1]).exclude(id=request.user.id)
+        
         context = {'result_users': users_group, 'user': request.user}
         return render(request, "RemiScene/search_people.html", context)
 
