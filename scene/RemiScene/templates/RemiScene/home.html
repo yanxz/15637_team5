@@ -38,17 +38,17 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block content %}
-<a class="create_scene" href="{% url 'create_scene' %}">Create scene</a>
+<a class="btn btn-lg btn-primary btn-block" style="width:150px;margin-left:33px" href="{% url 'create_scene' %}">Create scene</a>
 
 	<div class="scene_area">
-	{% for scene in scenes %}
+		{% for scene in scenes %}
 		<div class= "scene_container">
-		<center>
-		<a href="{% url 'scene_home' scene.id %}"><img class="scene_image" src="{% url 'get_photo' user.username scene.id 1 %}" > </a>
-		</center>
-		<p class="scene_text">{{scene.title}}</p>
-		<span class="scene_content">{{scene.description}}</span>
+			<center>
+			<a href="{% url 'scene_home' scene.id %}"><img class="scene_image" src="{% url 'get_photo' user.username scene.id 1 %}" > </a>
+			</center>
+			<p class="scene_text">{{scene.title}}</p>
+			<span class="scene_content">{{scene.description}}</span>
+		</div>
+		{% endfor %}
 	</div>
-{% endfor %}
-</div>
 {% endblock %}

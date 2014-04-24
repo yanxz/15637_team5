@@ -85,7 +85,7 @@
 </head>
 
 <body>
-    <div class="main">
+    <div class="main" style="padding-bottom:50px">
         <div class="main_resize">
             <!-- header -->
             <div class="header">
@@ -97,7 +97,7 @@
                         <span>
               <input type="text" value="Search People..." name="name" id="s" />
                             {% csrf_token %}
-              <input name="searchsubmit" type="image" src="{% static 'images/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
+              <input name="searchsubmit" type="image" src="{% static 'images/search.gif' %}" value="Go" id="searchsubmit" class="btn" style="height:27px" />
                             {% csrf_token %}
             </span>
                         {% csrf_token %}
@@ -106,7 +106,7 @@
                 </div>
                 <div class="menu_nav">
                     <ul>
-                        <li class="active"><a href="{% url 'home' %}">Home</a>
+                        <li><a href="{% url 'home' %}">Home</a>
                         </li>
                         <li><a href="{% url 'search_friend' %}">Friends</a>
                         </li>
@@ -116,17 +116,19 @@
                         </li>
                         <li><a href="{% url 'message' %}">Message</a>
                         </li>
+                        <li><a href="{% url 'logout' %}">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <!-- content -->
             
         </div>
-    <div class="text-center" style="margin-top:-70px;">
-      <h1>Scenes Around You:</h1>
+    <div class="text-center" style="margin-top:-10px; padding-bottom:10px">
+      <h2>Scenes Around You:</h2>
     </div>
-    <div id="map-canvas"/></div>
-    </div>
+    <div id="map-canvas" /></div>
+    </div >
 
     
 </body>
