@@ -5,7 +5,53 @@
 	<link rel="stylesheet" type="text/css" href="{% static "triangle.css" %}">
 	<script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
 	<script type="text/javascript" src="http://mediaplayer.yahoo.com/js"></script>
+
+	<style type="text/css">
+	.main {
+		padding:0;
+		margin:0;
+		background: url(images/colorChangeBg.jpg) repeat-x center;
+	}
+
+	.scene_description {
+	float:middle;
+	margin-top: 50px;
+	height:auto;
+	margin-right: 250px;
+	margin-left: 250px;
+	position:relative;
+	background-color: white;
+	border-radius: 10px;
+	opacity: 0.5;
+	box-shadow: 0 0 50px white;
+	padding: 20px;
+	}
+
+	.person_scene_block {
+		width: 920px;
+		height:auto;
+		background-color: white;
+		padding-bottom: 200px;
+		
+	}
+
+	.sddate {
+		background-image: url(../../static/images/bgflower.jpg); 
+	}
+
+	.sdparty {
+		background-image: url(../../static/images/bgparty.jpg); 
+	}
+
+</style>
 	<script type="text/javascript">
+	//var tag = {{scene.tag}};
+	// if (tag.equals("date")) {
+	// 	document.getElementsByClassName("person_scene_block").style.background-image="../../static/images/bgflower.jpg";
+	// } else if (tag.equals("party")) {
+	// 	document.getElementsByClassName("person_scene_block").style.background-image="../../static/images/bgparty.png";
+	// }
+
 	function func(aa){
 		//var layer = $.layer({});
 		//layer.msg("asfasdf");
@@ -27,19 +73,28 @@
 		});*/
 	}
 	$(document).ready(function(){
+		console.log("rcy");
 		var list = $("p.essay").toArray();
 		for (var i = 0; i < list.length; i++) {
-			var str = list[i].innerHTML.trim().substr(0,30);
+			var str = list[i].innerHTML.trim().substr(0,80);
 			list[i].innerHTML = str;
 		}
-		/*
-		 $(".right").mouseenter(function(){
-		   $(this).css("opacity","1.0");
-		   }); 
-		 $(".right").mouseleave(function(){
-		   $(this).css("opacity","0.0");
-		   }); 
-*/
+		//var tag = "{{scene.tag}}";
+		console.log("rcy");
+		//console.log({{scene.tag}});
+		if ("{{scene.tag}}"=="other") {
+			console.log("enter other1");
+			$(".person_scene_block").css("background-image","url(../../static/images/bgparty.png)");
+			//rcy.className = "person_scene_block sddate";
+			//rcy.style = "background-image: url(../../static/images/bgparty.png);";
+		} else {
+			console.log("enter other");
+			document.getElementsByClassName("person_scene_block")[0].style="background-image:url(../../static/images/bgparty.png)";
+			//var rcy = document.getElementsByClassName("person_scene_block")[0];
+			//rcy.className = "person_scene_block sddate";
+			//rcy.style = "background-image: url(../../static/images/bgparty.png);";
+		}
+
 	});
 
 /*
@@ -93,26 +148,62 @@
 
 {% block content %}
 
-	{% for person_scene in person_scenes %}
-	<div >
-	<div class="sidebar">
-		<img src="{% url 'get_photo' person_scene.user.username 1 0%}">
+
+<div class="person_scene_block">
+	<div class="scene_description">
+		<h2> {{scene.title}}</h2>
+		<p>{{scene.description}}</p>
 	</div>
-
-	<div class="mainbar" >
-		<!--<a href="{% url 'edit_person_scene' person_scene.id %}">-->
-		<div class="triangle-border left" onclick="func({{person_scene.id}})">
-			<div>
-				<p class="essay">
-		    	{{person_scene.essay}}
-		    	</p>
-		    </div>
-
+<!--
+	{% if scene.tag == "date" %}
+	<div class="scene_description sddate">
+		<h2> {{scene.title}}</h2>
+		<p>{{scene.description}}</p>
+	</div>
+	{% else %}
+		<div class="scene_description sdparty">
+			<h2> {{scene.title}}</h2>
+			<p>{{scene.description}}</p>
 		</div>
-		
-	</div>
-	</div>
+	{% endif %}
+-->
+	<div>
+	{% for person_scene in person_scenes %} 
+		{% if forloop.counter|divisibleby:2 %}
+		<div class="row" style="padding-bottom:50px">
+			<div class="rightsidebar">
+				<img src="{% url 'get_photo' person_scene.user.username 1 0%}">
+			</div>
+
+			<div class="mainbar" >
+				<div class="rightoval-thought" onclick="func({{person_scene.id}})" style="height:180px">
+						<div class="essay">
+				    	{{person_scene.essay}}
+				    	</div>
+				</div>
+				
+			</div>
+		</div>
+		{% else %}
+		<div class="row" style="padding-bottom:50px">
+			<div class="leftsidebar">
+				<img src="{% url 'get_photo' person_scene.user.username 1 0%}">
+			</div>
+
+			<div class="mainbar" >
+				<!--<a href="{% url 'edit_person_scene' person_scene.id %}">-->
+				<div class="leftoval-thought" onclick="func({{person_scene.id}})" style="height:180px">
+						<p class="essay">
+				    	{{person_scene.essay}}
+				    	</p>
+				</div>
+				
+			</div>
+		</div>
+
+		{% endif %}
 	{% endfor %}
+	</div>
 {% endblock %}
 
 {% block hidden %}
@@ -156,4 +247,5 @@
 		    	
 		    </div>
 		    {% endfor %}
+</div>
 {% endblock %}
