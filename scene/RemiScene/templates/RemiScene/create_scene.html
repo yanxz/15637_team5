@@ -126,8 +126,10 @@
 		geocoder.geocode( {'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				document.getElementById("check_result").innerHTML = "Address is recognized."
+				document.getElementById("check_result").className = "label label-success"
 			} else {
 				document.getElementById("check_result").innerHTML = "Can't find Location."
+				document.getElementById("check_result").className = "label label-warning"
 			}
 		})
 	}
@@ -137,9 +139,9 @@
 	<div class="well well-sm">
 		<div style="padding-right:80px">
 		<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'add_scene' %}" class="form-group" onclick="return input()">
-			<h2 style="text-align:center; padding-left:100px;">Create Scene</h2>
+			<h2 style="text-align:center; padding-left:100px; padding-bottom: 40px; padding-top:40px">Create Scene</h2>
 			<div class="form-group">
-				<label class="col-md-3 control-label">Title</label>
+				<label class="col-md-3 control-label"><font size = "4">Title</label>
 				<div class="col-md-9">
 					{{ form.title }}
 				</div>
@@ -164,26 +166,25 @@
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Location</label>
-				<div class="col-md-3">
+				<div class="col-md-9">
 					{{ form.loc }}
 				</div>
-				<div class="col-md-3">
-					<button type="button" onclick="checkAddress()">Check This Address</button>
+			</div>
+			<div class="form-group">
+				<div class="col-md-3 col-md-offset-3">
+					<button type="button" class="btn btn-primary" onclick="checkAddress()">Check Address</button>
 				</div>
-				<div class="col-md-3">
-					<p id="check_result"></p>
+				<div class="col-md-3" style="position:relative; left:-30px;">
+					<h3><span id="check_result"></span></h3>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label class="col-md-3 control-label">Friends in the site</label>
+				<label class="col-md-3 control-label">Friends</label>
 				<input id = "hidden_input" type="text" hidden="true" name="friends">
-				<!--
-				<div class="col-md-9">
-					<input type="text" name="friends" class="form-control" placeholder="John Lennon, Jeff Eppinger"/>
+				<div class="col-md-3">
+					<button type="button" class="btn btn-primary" onclick="func('hidden')">Add Friends</button>
 				</div>
-				-->
-				<div onclick="func('hidden')" class="btn btn-primary"> add friends </div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">Image</label>
