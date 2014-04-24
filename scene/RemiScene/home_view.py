@@ -61,6 +61,9 @@ def home(request):
 @login_required
 def manage_scene_create(request):
     context = {'form':SceneForm()}
+    friend_list = []
+    friendships = Friends.objects.filter(user=request.user)
+    
     return render(request, 'RemiScene/create_scene.html', context)
 
 @login_required
