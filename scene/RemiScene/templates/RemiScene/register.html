@@ -1,32 +1,87 @@
-{% extends "base.html" %} {% block content %}
-<div class="container">
-    <form class="form-signin" role="form" method="post" action="{% url 'register' %}">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-        <h2 class="form-signin-heading">
-            Register for a blog:
-            </h2>
-        {% for error in form.non_field_errors %}
-        <p style="color: red">
-            {{ error }}
-        </p>
-        {% endfor %}
-        <table>
-            {% for field in form.visible_fields %}
-            <tr>
-                <td>{{ field.label_tag }}</td>
-                <td>{{ field }}</td>
-            </tr>
-            <tr>
-                <span style="color:red">{{ field.errors }}</span>
-            </tr>
-            {% endfor %}
-            <tr>
-                <td>
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" text="Register">
-                </td>
-            </tr>
-        </table>
-        {% csrf_token %}
-    </form>
-</div>
-{% endblock %}
+<head>
+    {% load static %}
+    <title>RemiScene</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="../static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../static/js/script.js"></script>
+    <script type="text/javascript" src="../static/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="../static/js/arial.js"></script>
+    <script type="text/javascript" src="../static/js/cuf_run.js"></script>
+    {% block header %} {% endblock %}
+    <style type="text/css">
+        .form-signin {
+            width: 400px;
+            /*max-width: 600px;
+            padding: 19px 29px 29px;
+            margin: 0 auto 20px;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);*/
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="main_resize">
+            <!-- header -->
+            <div class="header">
+                <div class="logo">
+                    <h1><span>Remi</span>Scene<small></small></h1>
+                </div>
+                <div id="cover">
+                    <div id="cover_image">
+                        {% block cover_image %}
+                        <img src="{% static 'images/header_images.jpg' %}" width="923" height="645" alt="" /> 
+                        {% endblock %}
+                    </div>
+                    {% block head_portrait%}
+                    {% endblock %}
+                </div>
+            </div>
+            <div id="login" class="container">
+                <form class="form-signin" role="form" method="post" action="{% url 'register' %}">
+
+                    <h2 class="form-signin-heading">
+                        Register for a blog:
+                        </h2>
+                    {% for error in form.non_field_errors %}
+                    <p style="color: red">
+                        {{ error }}
+                    </p>
+                    {% endfor %}
+                    <table style="font-size:16px">
+                        {% for field in form.visible_fields %}
+                        <tr>
+                            <td>{{ field.label_tag }}</td>
+                            <td>{{ field }}</td>
+                        </tr>
+                        <tr>
+                            <span style="color:red">{{ field.errors }}</span>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="2">
+                                <input class="btn btn-lg btn-primary btn-block" type="submit" text="Register">
+                            </td>
+                        </tr>
+                    </table>
+                    {% csrf_token %}
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+

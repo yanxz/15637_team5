@@ -18,7 +18,7 @@ html {
 }
 .logo {
 	float:left;
-	width:400px;
+	width:280px;
 	height:86px;
 	padding:0;
 	margin:0 auto;
@@ -459,4 +459,42 @@ position:absolute;
     left:40px;
     top:140px;
     opacity: 0.0;
+}
+
+#login{
+  width:280px;
+  margin:0 auto;
+  margin-top:8px;
+  margin-bottom:2%;
+  transition:opacity 1s;
+  -webkit-transition:opacity 1s;
+}
+
+.logtext {
+	width:92%;
+  	background:#fff;
+  	margin-bottom:4%;
+  	border:1px solid #ccc;
+  	padding:4%;
+  	font-family:'Open Sans',sans-serif;
+  	font-size:95%;
+  	color:#555;
+}
+
+.logbutton {
+	width:100%;
+  background:#3399cc;
+  border:0;
+  padding:4%;
+  font-family:'Open Sans',sans-serif;
+  font-size:100%;
+  color:#fff;
+  cursor:pointer;
+  transition:background .3s;
+  -webkit-transition:background .3s;
+}
+
+table {
+	font-size: 18px;
+	font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
