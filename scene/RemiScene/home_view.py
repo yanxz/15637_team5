@@ -103,7 +103,10 @@ def search_people(request):
         return render(request, "RemiScene/search_people.html", {'user': request.user})
 
     name = request.POST["name"]
+    if len(name) == 0:
+        return render(request, "RemiScene/search_people.html", {'user': request.user})
 
+    result_set = []
     users_group1 = User.objects.filter(first_name__contains=name)
     users_group2 = User.objects.filter(last_name__contains=name)
     result_list = list(chain(users_group1, users_group2))
