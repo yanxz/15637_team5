@@ -1,11 +1,24 @@
 {% extends "home_base.html" %}
-
+	
 {% block content %}
+	<div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
 	{% for message in messages %}
-		<label>{{ message.from_user }}</label>
-		<p>{{ message.content }}</p>
-		{% if message.is_viewed == False %}
-			<a class="btn" href = "{% url 'confirm_message' message.id %}" type="button">Add SceneFriend</a>
-		{% endif %}
+		<div class="row">
+			<div class="col-sm-3 blog-sidebar" style="padding-bottom: 20px">
+				<img class="img-thumbnail" height="200" width="200" src="{% url 'get_photo' message.from_user.username 0 0 %}">
+			</div>
+			<div class="col-sm-8">
+				<div class="blog-post" style="padding-top:60px">
+					{{ message.content }}
+					<span class="pull-right">
+						{% if message.is_viewed == False %}
+							<a class="button" href = "{% url 'confirm_message' message.id %}" type="button" class="btn btn-lg btn-primary">Accept</a>
+						{% endif %}
+					</span>
+				</div>
+			</div>
+		</div>
+	<br>
 	{% endfor %}
+	</div>
 {% endblock %}
