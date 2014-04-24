@@ -122,7 +122,8 @@ def edit_person_scene(request,id):
 	person_scene.save()
 	if 'photo' in request.FILES:
 		photos = request.FILES.getlist('photo')
-		print(len(photos))
+		person_scene.photo_num = person_scene.photo_num+len(photos)
+		person_scene.save()
 		for photo in photos:
 			print(photo)
 			newPhoto = PersonScene_photo(person_scene=person_scene,photo=photo)
@@ -181,6 +182,7 @@ def get_person_scene_photo(request,id,index,type):
 	try:
 		index = int(index)
 		id = int(id)
+		type = int(type)
 		personScene = PersonScene.objects.get(id=id)
 		print(1)
 		photos = PersonScene_photo.objects.filter(person_scene=personScene)
@@ -189,7 +191,7 @@ def get_person_scene_photo(request,id,index,type):
 		if len(photos) == 0 or index < 0 or index >= len(photos):
 			return HttpResponse("")
 
-		#print(photo_id)
+		print(3)
 		'''
 		if index == 0:
 			print(3)
@@ -199,21 +201,26 @@ def get_person_scene_photo(request,id,index,type):
 			print(4)
 		'''
 		if type == 0:
+			print("type = 0")
 			photo = photos[index]
 		elif type == 1:
-			if index == len(id_list)-1:
+			print("type = 1")
+			if index == len(photos)-1:
 				index = 0
 			else:
 				index = index + 1
 			photo = photos[index]
 		elif type == 2:
+			print("type = 2")
 			if index == 0:
-				index = len(id_list)-1
+				index = len(photos)-1
 			else:
 				index = index-1
 			photo = photos[index]
 		print(5)
+		print(photo.photo)
 		content_type = guess_type(photo.photo.name)
+		print(6)
 		return HttpResponse(photo.photo,content_type=content_type)
 	except:
 		return HttpResponse("error")

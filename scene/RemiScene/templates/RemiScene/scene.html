@@ -32,6 +32,14 @@
 			var str = list[i].innerHTML.trim().substr(0,30);
 			list[i].innerHTML = str;
 		}
+		/*
+		 $(".right").mouseenter(function(){
+		   $(this).css("opacity","1.0");
+		   }); 
+		 $(".right").mouseleave(function(){
+		   $(this).css("opacity","0.0");
+		   }); 
+*/
 	});
 
 /*
@@ -50,14 +58,33 @@
 */
 
 
-	function get_photo(person_scene_id,type) {
+	function get_photo(person_scene_id,type,length) {
 		var person_scene = document.getElementById(person_scene_id);
-		var leftupbar = person_scene.getElementsByClassName("leftupbar")[0]
-		var id = leftupbar.getElementsByClassName("photo_id")[0].innerHTML
-		var image = leftupbar.getElementsByTagName("img")[0]
-		var str1 = "{% url 'get_photo_person'"
-		var str2 = " person_scene_id id type %}"
-		image.src = str1+str2
+		var leftupbar = person_scene.getElementsByClassName("leftupbar")[0];
+		var index_div = leftupbar.getElementsByClassName("photo_index")[0];
+		var index = parseInt(index_div.innerHTML);
+		var image = leftupbar.getElementsByTagName("img")[0];
+		//var str1 = "{% url 'get_photo_person' ";
+		//var str2 = person_scene_id+" "+index+" "+type+" %}";
+		//console.log(str1+str2)
+		image.src = "/get_photo_person/"+person_scene_id+"/"+index+"/"+type
+
+		if(type == 0) {
+
+		} else if (type == 1) {
+			if (index == length -1) {
+				index = 0;
+			} else {
+				index++;
+			}
+		} else if (type == 2) {
+			if (index == 0) {
+				index = length - 1;
+			} else {
+				index--;
+			}
+		}
+		index_div.innerHTML = index;
 	}
 
 	</script>
@@ -101,9 +128,10 @@
 		    		<div class="center">
 		    			<img src="{% url 'get_photo_person' person_scene.id 0 0 %}" class="center">
 		    		</div>
-		    		<button onclick="get_photo({{person_scene.id}},0,1)"> right</button>
-		    		<button onclick="get_photo({{person_scene.id}},0,2)">left</button>
-		    		<div class="photo_id" hidden='true'>-1</div>
+		    		<button onclick="get_photo({{person_scene.id}},1,{{person_scene.photo_num}})" class="right">&gt;</button>
+		    		<button onclick="get_photo({{person_scene.id}},2,{{person_scene.photo_num}})" class="left">&lt;</button>
+		    		
+		    		<div class="photo_index" hidden='true'>0</div>
 		    	</div>
 		    	
 
