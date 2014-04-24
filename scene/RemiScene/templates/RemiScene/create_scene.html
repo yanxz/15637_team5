@@ -33,7 +33,7 @@
 			title : false,
 			fix : false,
 			offset:['50%','50%'],
-			area : ['1000px','800px'],
+			area : ['800px','800px'],
 			closeBtn : [0,false],
 			page : {dom : '#'+aa},
 			shade : [0.5 , '#000' , true],
@@ -41,16 +41,19 @@
 		});
 	}
 
-	function addFriend(first,last,id) {
+	function addFriend(first,last,id,func) {
 		var div = document.getElementById("result");
 		var length = {{friends|length}};
 		console.log(length);
 		var is_active = $('#result '+'#'+id);
 		console.log(is_active.length+"length");
 		if (is_active.length == 0) {
-			var para = document.createElement("button");
+			var para = document.createElement("p");
 			para.id = id;
-			para.class = "btn btn-primary btn-lg";
+			para.className = "btn btn-primary btn-lg";
+			para.onclick = function () {
+				para.parentNode.removeChild(para);
+			};
 			console.log("rcy");
 			para.innerHTML = first+" "+last;
 			div.appendChild(para);
@@ -59,6 +62,7 @@
 
 		}
 	}
+
 
 
 </script>
@@ -183,14 +187,21 @@
 	</div>
 
 
-	<div class='container'>
+	<div class='container pull-bottom'>
 	{% for friend in friends %}
-		<div id = "{{friend.id}}" class="row">
-			<img src="{% url 'get_photo' friend.username 0 0 %}" class="col-md-3" width="200" height="200">
-			<div class="col-md-3">
-				<p> {{friend.first_name}} {{friend.last_name}}</p>
+		<div id = "{{friend.id}}" class="row" style="margin:30px;box-shadow: 0 2px 10px 1px;">
+			<img src="{% url 'get_photo' friend.username 0 0 %}" class="blog-sidebar col-sm-3" width="150" height="150" style="margin:20px;">
+			<div class="col-md-8">
+				<div class="blog-post" style="padding-top:60px">
+					<span class="pull-left">
+					<p> {{friend.first_name}} {{friend.last_name}}</p>
+					</span>
+					<span class="pull-right">
+					<button onclick="addFriend('{{friend.first_name}}','{{friend.last_name}}',{{friend.id}})" class=" btn btn-lg btn-primary">add this friend</button>
+					</span>
+				</div>
 			</div >
-			<button onclick="addFriend('{{friend.first_name}}','{{friend.last_name}}',{{friend.id}})" class="col-md-3 btn btn-lg btn-primary">add this friend</button>
+			
 		</div>
 	{% endfor %}
 	</div>
