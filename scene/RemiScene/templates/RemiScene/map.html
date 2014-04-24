@@ -21,6 +21,16 @@
         margin:auto;
         padding-bottom: 20px;
       }
+      #panel {
+        position: absolute;
+        top: 260px;
+        left: 55%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
     </style>
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZSWHRKqyMc9_0-NZuHCNVHxyvQGHTOhk&sensor=true">
@@ -28,6 +38,7 @@
     <script type="text/javascript" src="{% static 'js/markerclusterer.js' %}"></script>
     <script type="text/javascript">
       var geocoder;
+      var map;
       google.maps.event.addDomListener(window, 'load', function(){ getLocation(); });
 
       function addInfoWindow(marker, content) {
@@ -49,6 +60,17 @@
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
         }
+      }
+
+      function codeAddress() {
+        var address = document.getElementById('address').value;
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
       }
 
       function showPosition(position) {
@@ -80,6 +102,7 @@
           });
         {% endfor %}
         var markerCluster = new MarkerClusterer(map, markers);
+
       }
     </script>
 </head>
@@ -126,6 +149,10 @@
         </div>
     <div class="text-center" style="margin-top:-10px; padding-bottom:10px">
       <h2>Scenes Around You:</h2>
+    </div>
+    <div id="panel">
+      <input id="address" type="textbox" value="Pittsburgh, PA">
+      <input type="button" value="Go!" onclick="codeAddress()">
     </div>
     <div id="map-canvas" /></div>
     </div >
