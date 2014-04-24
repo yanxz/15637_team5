@@ -43,7 +43,7 @@
 			if (status == google.maps.GeocoderStatus.OK) {
 				document.getElementById("check_result").innerHTML = "Address is recognized."
 			} else {
-				document.getElementById("check_result").innerHTML = "Can't find address."
+				document.getElementById("check_result").innerHTML = "Can't find Location."
 			}
 		})
 	}
@@ -79,12 +79,12 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-3 control-label">Locationx</label>
+				<label class="col-md-3 control-label">Location</label>
 				<div class="col-md-3">
 					{{ form.loc }}
 				</div>
 				<div class="col-md-3">
-					<button type="button" onclick="checkAddress()">Check</button>
+					<button type="button" onclick="checkAddress()">Check This Address</button>
 				</div>
 				<div class="col-md-3">
 					<p id="check_result"></p>

@@ -18,7 +18,7 @@
 			</form>
 
 			{% for user in result_users %}
-			<div>
+			<div class="contrainer">
 				<span class="control-label" style="padding-left:280px; top:40px; font-size:20px">{{ user.first_name }} {{ user.last_name }}</span>
 				<a class="btn" href = "{% url 'friend_home' user.id %}" type="button" class="btn btn-lg btn-primary">go to home page</a>
 			</div>

@@ -1,32 +1,61 @@
 {% extends "home_base.html" %}
 
 {% block content %}
+<style type="text/css">
+.button {
+  display: block;
+  width: 115px;
+  height: 40px;
+  background: #4E9CAF;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+</style>
 	<div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
-		<div class="well well-sm">
-			<div style="padding-right:80px;margin-bottom:80px;">
-			<form class="form-horizontal" enctype="multipart/form-data" method="post" action="{% url 'search_people' %}" class="form-group">
-				<h2 style="text-align:center; padding-left:100px;">Hi, {{ user.first_name }} {{ user.last_name }}</h2>
-				<form class="form-group" method="post" action="{% url 'search_people' %}">
-					<span style="padding-left : 150px">
-						<label class="ontrol-label">Type in the name of the person:</label>
-						<input type="text" name="name"><br>
-					</span>
-					<span class="col-md-12 text-center" style="padding-left : 100px; padding-top:50px;">
-						<input type="submit" value="search" class="btn btn-lg btn-primary"/>
-					</span>
-				{% csrf_token %}
-				</form>
-
-				{% for user in result_users %}
-				<hr>
-				<div>
-					<span class="control-label" style="padding-left:280px; top:40px; font-size:20px">{{ user.first_name }} {{ user.last_name }}</span>
-					<a class="btn" href = "{% url 'add_friend' user.id %}" type="button" class="btn btn-lg btn-primary">add to friend</a>
+			<div class="page-header">
+				<h1>Hi, {{ user.first_name }} {{ user.last_name }}</h1>
+			</div>
+			<form enctype="multipart/form-data" method="post" action="{% url 'search_people' %}" class="form-group">
+				<div class="row">
+					<div class="col-lg-6">
+					    <div class="input-group">
+					      <input type="text" name="name" placeholder="Name" class="form-control">
+					      <span class="input-group-btn">
+					        <input class="btn btn-default" type="submit" value="Search">
+					      </span>
+					    </div><!-- /input-group -->
+					  </div><!-- /.col-lg-6 -->
 				</div>
-				{% endfor %}
-
+				{% csrf_token %}
+			</form>
+			
+				
+				
+			{% if not result_users %}
+				<h2 class="blog-post-title" style="margin-top:40px">No people found with given names</h2>
+			{% endif %}
+			{% for user in result_users %}
+			<div class="row">
+				<div class="col-sm-3 blog-sidebar" style="padding-bottom: 20px">
+					<img class="img-thumbnail" height="200" width="200" src="{% url 'get_photo' user.username 0 0 %}">
+				</div>
+				<div class="col-sm-8">
+					<div class="blog-post" style="padding-top:60px">
+						<span>{{ user.first_name }} {{ user.last_name }}</span>
+						<span class="pull-right">
+							<a class="button" href = "{% url 'add_friend' user.id %}" type="button" class="btn btn-lg btn-primary">add to friend</a>
+						</span>
+					</div>
+					
+				</div>
+			</div>
+			<br>
+			{% endfor %}
 		{% if add_friend_result %}
 			{{ add_friend_result }}
 		{% endif %}
-
+	</div>
 {% endblock %}
